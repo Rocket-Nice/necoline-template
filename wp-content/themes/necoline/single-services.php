@@ -1,0 +1,275 @@
+<?php
+include (locate_template('header.php'));
+$current_language = pll_current_language();
+?>  
+
+  <main class="main-content">
+    <div class="breadcrumbs text">
+      <div class="container">
+        <ul class="breadcrumbs__list">
+          <li class="breadcrumbs__item">
+            <a href="/" class="breadcrumbs__link text"><?= $current_language == 'ru' ? 'Главная' : 'Home' ?></a>
+          </li>
+          <li class="breadcrumbs__item">
+            <a href="#" class="breadcrumbs__link text"><?= $current_language == 'ru' ? 'Направления' : 'Directions' ?></a>
+          </li>
+          <li class="breadcrumbs__item">
+            <a href="directions-asia.html" class="breadcrumbs__link text"><?php single_term_title() ?></a>
+          </li>
+          <li class="breadcrumbs__item"><?php the_title() ?></li>
+        </ul>
+      </div>
+    </div>
+    <section class="head">
+      <div class="container">
+        <h1 class="head__title title title--h1"><?php the_field('services_title'); ?></h1>
+        <div class="head__description title"><?php the_field('services_subtitle'); ?></div>
+      </div>
+    </section>
+    <section class="description">
+      <div class="container">
+        <div class="description__inner">
+          <div class="description__text-wrapper">
+			<?php $terms = get_the_terms( $post->ID, 'directions' ); ?>
+            <div class="description__suptitle title"><?php echo $terms[0]->name; ?></div>
+            <?php while (have_rows('services_group')) : the_row(); ?>
+			<div class="description__title title title--h2"><?= get_sub_field('services_title2') ?></div>
+            <div class="description__text"><?= get_sub_field('services_descr') ?></div>
+			<?php endwhile; ?>
+          </div>
+          <picture>
+            <img class="description__image" src="<?php the_post_thumbnail_url(); ?>" alt="" />
+          </picture>
+        </div>
+      </div>
+    </section>
+	<?php if ($ports_1 = get_field('services_ports_1')) : ?>
+    <section class="container-shipping-cards container-shipping-cards--small-paddings">
+      <div class="container">
+        <div class="container-shipping-cards__title title title--h5"><?= $current_language == 'ru' ? 'порты прямого судоходства' : 'direct shipping ports' ?></div>
+        <div class="container-shipping-cards__list" data-current-page="1">
+		 <?php foreach ($ports_1 as $post) : setup_postdata($post); ?> 
+		 <div class="container-shipping-cards__card card container-shipping-card">
+            <div class="container-shipping-card__country">
+              <picture>
+                <img class="container-shipping-card__country-logo" src="<?php the_field('port_flag') ?>" alt="<?php the_field('port_country') ?>" />
+              </picture>
+              <div class="container-shipping-card__country-name title title--h2"><?php the_title(); ?></div>
+            </div>
+            <div class="container-shipping-card__info">
+              <div class="container-shipping-card__info-item">
+                <div class="container-shipping-card__info-name"><?= $current_language == 'ru' ? 'Страна' : 'Country' ?>:</div>
+                <div class="container-shipping-card__info-value"><?php the_field('port_country') ?></div>
+              </div>
+              <div class="container-shipping-card__info-item">
+                <div class="container-shipping-card__info-name"><?= $current_language == 'ru' ? 'Город' : 'City' ?>:</div>
+                <div class="container-shipping-card__info-value"><?php the_field('port_city') ?></div>
+              </div>
+            </div>
+          </div>
+    	  <?php endforeach; ?>
+          <?php wp_reset_postdata(); ?>
+        </div>
+        <div class="pagination">
+          <ul class="pagination__list">
+            <li class="pagination__item">
+              <button class="pagination__link pagination__link--left">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="16" viewBox="0 0 11 16" fill="none">
+                  <g clip-path="url(#clip0_1022_199799)">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 16L8 16L2 8L8 -8.74228e-08L9 0L3 8L9 16Z"
+                      fill="currentColor" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_1022_199799">
+                      <rect width="11" height="16" fill="white" transform="translate(11 16) rotate(-180)" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </button>
+            </li>
+            <div class="pagination__number-item">
+            </div>
+            <li class="pagination__item">
+              <button class="pagination__link pagination__link--right">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="16" viewBox="0 0 11 16" fill="none">
+                  <g clip-path="url(#clip0_1022_199800)">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M2 16L3 16L9 8L3 1.74846e-07L2 0L8 8L2 16Z"
+                      fill="currentColor" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_1022_199800">
+                      <rect width="11" height="16" fill="white" transform="matrix(1 1.74846e-07 1.74846e-07 -1 0 16)" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+	<?php endif; ?>
+    <?php if ($ports_2 = get_field('services_ports_2')) : ?>
+	<section class="container-shipping-cards">
+      <div class="container">
+        <div class="container-shipping-cards__title title title--h5"><?= $current_language == 'ru' ? 'фидерный сервис' : 'feeder service' ?></div>
+        <div class="container-shipping-cards__list" data-current-page="1">
+          <?php foreach ($ports_2 as $post) : setup_postdata($post); ?>
+		  <div class="container-shipping-cards__card card container-shipping-card">
+            <div class="container-shipping-card__country">
+              <picture>
+                <img class="container-shipping-card__country-logo" src="<?php the_field('port_flag') ?>" alt="<?php the_field('port_country') ?>" />
+              </picture>
+              <div class="container-shipping-card__country-name title title--h2"><?php the_title(); ?></div>
+            </div>
+            <div class="container-shipping-card__info">
+              <div class="container-shipping-card__info-item">
+                <div class="container-shipping-card__info-name"><?= $current_language == 'ru' ? 'Страна' : 'Country' ?>:</div>
+                <div class="container-shipping-card__info-value"><?php the_field('port_country') ?></div>
+              </div>
+              <div class="container-shipping-card__info-item">
+                <div class="container-shipping-card__info-name"><?= $current_language == 'ru' ? 'Город' : 'City' ?>:</div>
+                <div class="container-shipping-card__info-value"><?php the_field('port_city') ?></div>
+              </div>
+            </div>
+          </div>
+          <?php endforeach; 
+				wp_reset_postdata(); 
+		  ?>
+        </div>
+        <div class="pagination">
+          <ul class="pagination__list">
+            <li class="pagination__item">
+              <button class="pagination__link pagination__link--left">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="16" viewBox="0 0 11 16" fill="none">
+                  <g clip-path="url(#clip0_1022_199799)">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 16L8 16L2 8L8 -8.74228e-08L9 0L3 8L9 16Z"
+                      fill="currentColor" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_1022_199799">
+                      <rect width="11" height="16" fill="white" transform="translate(11 16) rotate(-180)" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </button>
+            </li>
+            <div class="pagination__number-item">
+            </div>
+            <li class="pagination__item">
+              <button class="pagination__link pagination__link--right">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="16" viewBox="0 0 11 16" fill="none">
+                  <g clip-path="url(#clip0_1022_199800)">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M2 16L3 16L9 8L3 1.74846e-07L2 0L8 8L2 16Z"
+                      fill="currentColor" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_1022_199800">
+                      <rect width="11" height="16" fill="white" transform="matrix(1 1.74846e-07 1.74846e-07 -1 0 16)" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+	<?php endif; ?>
+	<?php if ( $services_map = get_field('services_img') ) : ?>
+    <section class="map">
+      <div class="container">
+        <div class="map__inner">
+          <picture>
+            <img class="map__background" src="<?= esc_url($services_map["url"]) ?>" alt="<?= esc_attr($services_map["alt"]) ?>" />
+          </picture>
+        </div>
+      </div>
+    </section>
+	<?php endif; ?>
+    <div class="container">
+      <a href="<?= $current_language == 'ru' ? '/schedule/raspisanie-dvizheniya-sudov/' : '/en/raspisanie-dvizheniya-sudov/' ?>" class="train-timetable-button button title title--button button--primary" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="22" viewBox="0 0 21 22" fill="none">
+          <mask id="path-1-outside-1_1378_43933" maskUnits="userSpaceOnUse" x="-0.5" y="0" width="22" height="22"
+            fill="black">
+            <rect fill="white" x="-0.5" width="22" height="22" />
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M4.21206 1.04563C3.47057 1.22402 2.98609 1.84677 2.98609 2.62161V2.90796H2.77241C2.42234 2.90796 2.1011 2.98246 1.76012 3.14278C1.22837 3.39277 0.799884 3.87019 0.60389 4.43119L0.514053 4.68835L0.502717 10.7534C0.494638 15.0923 0.504205 16.8935 0.536401 17.082C0.668685 17.8568 1.28509 18.5351 2.10178 18.8046C2.36245 18.8906 2.37174 18.8909 6.05849 18.9033L9.75388 18.9157L10.1849 19.321C11.1246 20.2048 12.2055 20.7337 13.5174 20.9516C13.9065 21.0163 14.9787 21.0161 15.3664 20.9513C16.6941 20.7296 17.8214 20.1602 18.7539 19.2404C21.0635 16.9621 21.0844 13.3467 18.8016 11.0152C18.5974 10.8067 18.2852 10.5304 18.1078 10.4013L17.7853 10.1665L17.7702 7.44699C17.7554 4.77276 17.7537 4.72326 17.6672 4.47314C17.479 3.92885 17.0885 3.4582 16.5988 3.18547C16.3231 3.03188 15.8326 2.90796 15.5006 2.90796H15.2458L15.2451 2.70253C15.2441 2.4082 15.1491 2.01745 15.0275 1.80721C14.8853 1.56147 14.5681 1.28095 14.2898 1.15499C13.997 1.02238 13.5187 0.991433 13.1975 1.08433C12.7656 1.20919 12.4113 1.50814 12.2022 1.92416C12.1179 2.09183 12.0909 2.2149 12.0729 2.51228L12.0502 2.88839L9.12598 2.89845L6.20175 2.90847L6.20126 2.64411C6.20038 2.1609 6.04261 1.77109 5.72133 1.45829C5.32186 1.06946 4.75607 0.914739 4.21206 1.04563ZM4.21648 1.98313C4.13046 2.0338 4.01751 2.14376 3.96546 2.2275C3.87313 2.37599 3.8708 2.40241 3.87059 3.30904L3.87039 4.23836H4.59593H5.32142L5.3094 3.2865C5.2975 2.3461 5.29613 2.33291 5.19754 2.19294C4.98365 1.88934 4.53756 1.79394 4.21648 1.98313ZM13.2731 1.97957C13.1985 2.02848 13.0963 2.12795 13.046 2.20058C12.9572 2.32892 12.9546 2.35913 12.9546 3.28548V4.23836H13.6606H14.3667L14.354 3.28634L14.3414 2.33428L14.2262 2.18735C14.0557 1.96991 13.8979 1.8909 13.6339 1.89075C13.466 1.89063 13.3741 1.91325 13.2731 1.97957ZM2.38118 3.8221C2.1497 3.88287 1.96017 3.99721 1.7764 4.18699C1.43325 4.54134 1.37826 4.75679 1.37826 5.74677V6.46875H9.14057H16.9029L16.8848 5.65681C16.8688 4.93749 16.8567 4.81948 16.7778 4.6223C16.5862 4.14269 16.1033 3.81209 15.5433 3.7771L15.2537 3.75903L15.2397 4.31498L15.2257 4.87093L15.0944 4.98507L14.9631 5.09921H13.6755C12.3068 5.09921 12.2116 5.08744 12.1117 4.90572C12.0889 4.86432 12.0703 4.59159 12.0703 4.29964V3.76881H9.13603H6.20175V4.25539C6.20175 4.52299 6.1841 4.78712 6.16255 4.84229C6.14101 4.8975 6.06411 4.97819 5.99172 5.02166C5.86567 5.0973 5.80401 5.10019 4.54034 5.09014L3.22059 5.07965L3.10334 4.95185C2.98609 4.82409 2.98609 4.82405 2.98609 4.29643V3.76881L2.77506 3.77143C2.65898 3.77292 2.48175 3.79569 2.38118 3.8221ZM1.38755 12.1718L1.39836 17.0142L1.50705 17.2399C1.64962 17.5361 1.95587 17.8241 2.25203 17.9405L2.48364 18.0315L5.80984 18.0428C7.63926 18.049 9.13603 18.047 9.13603 18.0383C9.13603 18.0297 9.05656 17.8661 8.95945 17.6749C8.77049 17.3028 8.58189 16.7658 8.47308 16.2903C8.38321 15.8973 8.34671 14.7577 8.41022 14.3265C8.66393 12.6034 9.62791 11.1162 11.1056 10.1677C11.549 9.88315 11.7072 9.80172 12.1686 9.62067C12.9079 9.33053 13.5932 9.20363 14.4218 9.20355C15.2223 9.20347 15.8183 9.30408 16.5437 9.56178C16.7226 9.62537 16.8748 9.67737 16.882 9.67737C16.8891 9.67737 16.8902 9.15354 16.8844 8.51327L16.8737 7.34916L9.12522 7.33926L1.37673 7.3294L1.38755 12.1718ZM13.9718 10.073C11.4509 10.2872 9.43489 12.2729 9.26341 14.7106C9.08181 17.2923 10.8126 19.5228 13.4075 20.051C14.2425 20.2209 15.3349 20.1466 16.1395 19.865C17.7286 19.3088 18.9485 18.0549 19.4049 16.5085C19.5569 15.9935 19.6028 15.6644 19.6017 15.0968C19.6001 14.2588 19.4548 13.6381 19.0887 12.9056C18.1387 11.0045 16.1255 9.89008 13.9718 10.073ZM14.0007 12.1187C13.9269 12.1426 13.8287 12.2118 13.7824 12.2725C13.7007 12.3797 13.6979 12.4295 13.6869 13.9631C13.6745 15.6913 13.6804 15.7433 13.904 15.8861C14.0048 15.9505 14.1334 15.9589 15.1836 15.9701C15.8258 15.9769 16.431 15.971 16.5285 15.9569C16.7851 15.92 16.934 15.7644 16.934 15.5333C16.934 15.389 16.9118 15.3355 16.811 15.2374L16.688 15.1177L15.6353 15.1072L14.5825 15.0968L14.5625 13.7273C14.5514 12.974 14.5273 12.328 14.5088 12.2916C14.4297 12.1356 14.1953 12.0558 14.0007 12.1187Z" />
+          </mask>
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M4.21206 1.04563C3.47057 1.22402 2.98609 1.84677 2.98609 2.62161V2.90796H2.77241C2.42234 2.90796 2.1011 2.98246 1.76012 3.14278C1.22837 3.39277 0.799884 3.87019 0.60389 4.43119L0.514053 4.68835L0.502717 10.7534C0.494638 15.0923 0.504205 16.8935 0.536401 17.082C0.668685 17.8568 1.28509 18.5351 2.10178 18.8046C2.36245 18.8906 2.37174 18.8909 6.05849 18.9033L9.75388 18.9157L10.1849 19.321C11.1246 20.2048 12.2055 20.7337 13.5174 20.9516C13.9065 21.0163 14.9787 21.0161 15.3664 20.9513C16.6941 20.7296 17.8214 20.1602 18.7539 19.2404C21.0635 16.9621 21.0844 13.3467 18.8016 11.0152C18.5974 10.8067 18.2852 10.5304 18.1078 10.4013L17.7853 10.1665L17.7702 7.44699C17.7554 4.77276 17.7537 4.72326 17.6672 4.47314C17.479 3.92885 17.0885 3.4582 16.5988 3.18547C16.3231 3.03188 15.8326 2.90796 15.5006 2.90796H15.2458L15.2451 2.70253C15.2441 2.4082 15.1491 2.01745 15.0275 1.80721C14.8853 1.56147 14.5681 1.28095 14.2898 1.15499C13.997 1.02238 13.5187 0.991433 13.1975 1.08433C12.7656 1.20919 12.4113 1.50814 12.2022 1.92416C12.1179 2.09183 12.0909 2.2149 12.0729 2.51228L12.0502 2.88839L9.12598 2.89845L6.20175 2.90847L6.20126 2.64411C6.20038 2.1609 6.04261 1.77109 5.72133 1.45829C5.32186 1.06946 4.75607 0.914739 4.21206 1.04563ZM4.21648 1.98313C4.13046 2.0338 4.01751 2.14376 3.96546 2.2275C3.87313 2.37599 3.8708 2.40241 3.87059 3.30904L3.87039 4.23836H4.59593H5.32142L5.3094 3.2865C5.2975 2.3461 5.29613 2.33291 5.19754 2.19294C4.98365 1.88934 4.53756 1.79394 4.21648 1.98313ZM13.2731 1.97957C13.1985 2.02848 13.0963 2.12795 13.046 2.20058C12.9572 2.32892 12.9546 2.35913 12.9546 3.28548V4.23836H13.6606H14.3667L14.354 3.28634L14.3414 2.33428L14.2262 2.18735C14.0557 1.96991 13.8979 1.8909 13.6339 1.89075C13.466 1.89063 13.3741 1.91325 13.2731 1.97957ZM2.38118 3.8221C2.1497 3.88287 1.96017 3.99721 1.7764 4.18699C1.43325 4.54134 1.37826 4.75679 1.37826 5.74677V6.46875H9.14057H16.9029L16.8848 5.65681C16.8688 4.93749 16.8567 4.81948 16.7778 4.6223C16.5862 4.14269 16.1033 3.81209 15.5433 3.7771L15.2537 3.75903L15.2397 4.31498L15.2257 4.87093L15.0944 4.98507L14.9631 5.09921H13.6755C12.3068 5.09921 12.2116 5.08744 12.1117 4.90572C12.0889 4.86432 12.0703 4.59159 12.0703 4.29964V3.76881H9.13603H6.20175V4.25539C6.20175 4.52299 6.1841 4.78712 6.16255 4.84229C6.14101 4.8975 6.06411 4.97819 5.99172 5.02166C5.86567 5.0973 5.80401 5.10019 4.54034 5.09014L3.22059 5.07965L3.10334 4.95185C2.98609 4.82409 2.98609 4.82405 2.98609 4.29643V3.76881L2.77506 3.77143C2.65898 3.77292 2.48175 3.79569 2.38118 3.8221ZM1.38755 12.1718L1.39836 17.0142L1.50705 17.2399C1.64962 17.5361 1.95587 17.8241 2.25203 17.9405L2.48364 18.0315L5.80984 18.0428C7.63926 18.049 9.13603 18.047 9.13603 18.0383C9.13603 18.0297 9.05656 17.8661 8.95945 17.6749C8.77049 17.3028 8.58189 16.7658 8.47308 16.2903C8.38321 15.8973 8.34671 14.7577 8.41022 14.3265C8.66393 12.6034 9.62791 11.1162 11.1056 10.1677C11.549 9.88315 11.7072 9.80172 12.1686 9.62067C12.9079 9.33053 13.5932 9.20363 14.4218 9.20355C15.2223 9.20347 15.8183 9.30408 16.5437 9.56178C16.7226 9.62537 16.8748 9.67737 16.882 9.67737C16.8891 9.67737 16.8902 9.15354 16.8844 8.51327L16.8737 7.34916L9.12522 7.33926L1.37673 7.3294L1.38755 12.1718ZM13.9718 10.073C11.4509 10.2872 9.43489 12.2729 9.26341 14.7106C9.08181 17.2923 10.8126 19.5228 13.4075 20.051C14.2425 20.2209 15.3349 20.1466 16.1395 19.865C17.7286 19.3088 18.9485 18.0549 19.4049 16.5085C19.5569 15.9935 19.6028 15.6644 19.6017 15.0968C19.6001 14.2588 19.4548 13.6381 19.0887 12.9056C18.1387 11.0045 16.1255 9.89008 13.9718 10.073ZM14.0007 12.1187C13.9269 12.1426 13.8287 12.2118 13.7824 12.2725C13.7007 12.3797 13.6979 12.4295 13.6869 13.9631C13.6745 15.6913 13.6804 15.7433 13.904 15.8861C14.0048 15.9505 14.1334 15.9589 15.1836 15.9701C15.8258 15.9769 16.431 15.971 16.5285 15.9569C16.7851 15.92 16.934 15.7644 16.934 15.5333C16.934 15.389 16.9118 15.3355 16.811 15.2374L16.688 15.1177L15.6353 15.1072L14.5825 15.0968L14.5625 13.7273C14.5514 12.974 14.5273 12.328 14.5088 12.2916C14.4297 12.1356 14.1953 12.0558 14.0007 12.1187Z"
+            fill="white" />
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M4.21206 1.04563C3.47057 1.22402 2.98609 1.84677 2.98609 2.62161V2.90796H2.77241C2.42234 2.90796 2.1011 2.98246 1.76012 3.14278C1.22837 3.39277 0.799884 3.87019 0.60389 4.43119L0.514053 4.68835L0.502717 10.7534C0.494638 15.0923 0.504205 16.8935 0.536401 17.082C0.668685 17.8568 1.28509 18.5351 2.10178 18.8046C2.36245 18.8906 2.37174 18.8909 6.05849 18.9033L9.75388 18.9157L10.1849 19.321C11.1246 20.2048 12.2055 20.7337 13.5174 20.9516C13.9065 21.0163 14.9787 21.0161 15.3664 20.9513C16.6941 20.7296 17.8214 20.1602 18.7539 19.2404C21.0635 16.9621 21.0844 13.3467 18.8016 11.0152C18.5974 10.8067 18.2852 10.5304 18.1078 10.4013L17.7853 10.1665L17.7702 7.44699C17.7554 4.77276 17.7537 4.72326 17.6672 4.47314C17.479 3.92885 17.0885 3.4582 16.5988 3.18547C16.3231 3.03188 15.8326 2.90796 15.5006 2.90796H15.2458L15.2451 2.70253C15.2441 2.4082 15.1491 2.01745 15.0275 1.80721C14.8853 1.56147 14.5681 1.28095 14.2898 1.15499C13.997 1.02238 13.5187 0.991433 13.1975 1.08433C12.7656 1.20919 12.4113 1.50814 12.2022 1.92416C12.1179 2.09183 12.0909 2.2149 12.0729 2.51228L12.0502 2.88839L9.12598 2.89845L6.20175 2.90847L6.20126 2.64411C6.20038 2.1609 6.04261 1.77109 5.72133 1.45829C5.32186 1.06946 4.75607 0.914739 4.21206 1.04563ZM4.21648 1.98313C4.13046 2.0338 4.01751 2.14376 3.96546 2.2275C3.87313 2.37599 3.8708 2.40241 3.87059 3.30904L3.87039 4.23836H4.59593H5.32142L5.3094 3.2865C5.2975 2.3461 5.29613 2.33291 5.19754 2.19294C4.98365 1.88934 4.53756 1.79394 4.21648 1.98313ZM13.2731 1.97957C13.1985 2.02848 13.0963 2.12795 13.046 2.20058C12.9572 2.32892 12.9546 2.35913 12.9546 3.28548V4.23836H13.6606H14.3667L14.354 3.28634L14.3414 2.33428L14.2262 2.18735C14.0557 1.96991 13.8979 1.8909 13.6339 1.89075C13.466 1.89063 13.3741 1.91325 13.2731 1.97957ZM2.38118 3.8221C2.1497 3.88287 1.96017 3.99721 1.7764 4.18699C1.43325 4.54134 1.37826 4.75679 1.37826 5.74677V6.46875H9.14057H16.9029L16.8848 5.65681C16.8688 4.93749 16.8567 4.81948 16.7778 4.6223C16.5862 4.14269 16.1033 3.81209 15.5433 3.7771L15.2537 3.75903L15.2397 4.31498L15.2257 4.87093L15.0944 4.98507L14.9631 5.09921H13.6755C12.3068 5.09921 12.2116 5.08744 12.1117 4.90572C12.0889 4.86432 12.0703 4.59159 12.0703 4.29964V3.76881H9.13603H6.20175V4.25539C6.20175 4.52299 6.1841 4.78712 6.16255 4.84229C6.14101 4.8975 6.06411 4.97819 5.99172 5.02166C5.86567 5.0973 5.80401 5.10019 4.54034 5.09014L3.22059 5.07965L3.10334 4.95185C2.98609 4.82409 2.98609 4.82405 2.98609 4.29643V3.76881L2.77506 3.77143C2.65898 3.77292 2.48175 3.79569 2.38118 3.8221ZM1.38755 12.1718L1.39836 17.0142L1.50705 17.2399C1.64962 17.5361 1.95587 17.8241 2.25203 17.9405L2.48364 18.0315L5.80984 18.0428C7.63926 18.049 9.13603 18.047 9.13603 18.0383C9.13603 18.0297 9.05656 17.8661 8.95945 17.6749C8.77049 17.3028 8.58189 16.7658 8.47308 16.2903C8.38321 15.8973 8.34671 14.7577 8.41022 14.3265C8.66393 12.6034 9.62791 11.1162 11.1056 10.1677C11.549 9.88315 11.7072 9.80172 12.1686 9.62067C12.9079 9.33053 13.5932 9.20363 14.4218 9.20355C15.2223 9.20347 15.8183 9.30408 16.5437 9.56178C16.7226 9.62537 16.8748 9.67737 16.882 9.67737C16.8891 9.67737 16.8902 9.15354 16.8844 8.51327L16.8737 7.34916L9.12522 7.33926L1.37673 7.3294L1.38755 12.1718ZM13.9718 10.073C11.4509 10.2872 9.43489 12.2729 9.26341 14.7106C9.08181 17.2923 10.8126 19.5228 13.4075 20.051C14.2425 20.2209 15.3349 20.1466 16.1395 19.865C17.7286 19.3088 18.9485 18.0549 19.4049 16.5085C19.5569 15.9935 19.6028 15.6644 19.6017 15.0968C19.6001 14.2588 19.4548 13.6381 19.0887 12.9056C18.1387 11.0045 16.1255 9.89008 13.9718 10.073ZM14.0007 12.1187C13.9269 12.1426 13.8287 12.2118 13.7824 12.2725C13.7007 12.3797 13.6979 12.4295 13.6869 13.9631C13.6745 15.6913 13.6804 15.7433 13.904 15.8861C14.0048 15.9505 14.1334 15.9589 15.1836 15.9701C15.8258 15.9769 16.431 15.971 16.5285 15.9569C16.7851 15.92 16.934 15.7644 16.934 15.5333C16.934 15.389 16.9118 15.3355 16.811 15.2374L16.688 15.1177L15.6353 15.1072L14.5825 15.0968L14.5625 13.7273C14.5514 12.974 14.5273 12.328 14.5088 12.2916C14.4297 12.1356 14.1953 12.0558 14.0007 12.1187Z"
+            stroke="white" stroke-width="0.4" mask="url(#path-1-outside-1_1378_43933)" />
+        </svg>
+        <p><?= $current_language == 'ru' ? 'расписание движения судов' : 'ship schedule' ?></p>
+      </a>
+    </div>
+    <?php if ($ships = get_field('services_ships')) : ?>
+	<section class="our-assets">
+      <div class="container">
+        <div class="our-assets__head">
+          <div class="our-assets__head-text">
+            <div class="our-assets__uptitle title"><?= $current_language == 'ru' ? 'суда на направлении' : 'ships on the way' ?></div>
+            <div class="our-assets__title title title--h2"><?= $current_language == 'ru' ? 'Собственный флот' : 'Own fleet' ?></div>
+            <div class="our-assets__description"><?= $current_language == 'ru' ? 'Наши перевозки обеспечиваются собственным флотом,
+              что гарантирует высокий уровень контроля и надёжности в каждой доставке.' : 'Our transportation is provided by our own fleet,
+              which guarantees a high level of control and reliability in every delivery.' ?></div>
+          </div>
+          <div class="our-assets__controls">
+            <button class="our-assets__arrow our-assets__left-arrow" type="button">
+              <svg xmlns="http://www.w3.org/2000/svg" width="151" height="16" viewBox="0 0 151 16" fill="none">
+                <path
+                  d="M0.292892 8.70711C-0.0976257 8.31658 -0.0976257 7.68342 0.292892 7.29289L6.65686 0.928932C7.04738 0.538408 7.68054 0.538408 8.07108 0.928932C8.46159 1.31946 8.46159 1.95262 8.07108 2.34315L2.41422 8L8.07108 13.6569C8.46159 14.0474 8.46159 14.6805 8.07108 15.0711C7.68054 15.4616 7.04738 15.4616 6.65686 15.0711L0.292892 8.70711ZM151 9H1V7H151V9Z"
+                  fill="#314D71" />
+              </svg>
+            </button>
+            <button class="our-assets__arrow our-assets__right-arrow" type="button">
+              <svg xmlns="http://www.w3.org/2000/svg" width="151" height="16" viewBox="0 0 151 16" fill="none">
+                <path
+                  d="M150.707 8.70711C151.098 8.31658 151.098 7.68342 150.707 7.29289L144.343 0.928932C143.953 0.538408 143.319 0.538408 142.929 0.928932C142.538 1.31946 142.538 1.95262 142.929 2.34315L148.586 8L142.929 13.6569C142.538 14.0474 142.538 14.6805 142.929 15.0711C143.319 15.4616 143.953 15.4616 144.343 15.0711L150.707 8.70711ZM0 9H150V7H0V9Z"
+                  fill="#314D71" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="our-assets__slider swiper">
+          <div class="swiper-wrapper">
+            <?php foreach ($ships as $post) : setup_postdata($post); ?>
+			<div class="swiper-slide">
+              <a href="<?php the_permalink(); ?>" class="our-assets__card card">
+                <picture>
+                  <img class="our-assets__card-image" src="<?php the_post_thumbnail_url(); ?>" alt="Судно <?php the_title(); ?>" />
+                </picture>
+                <div class="our-assets__card-text">
+                  <div class="our-assets__card-name"><?= $current_language == 'ru' ? 'Судно' : 'Vessel' ?></div>
+                  <div class="our-assets__card-title title"><?php the_title(); ?></div>
+                </div>
+              </a>
+            </div>
+			<?php endforeach; ?>
+          </div>
+        </div>
+        <a href="<?= get_page_link(108) ?>" class="our-assets__button button title title--button">
+          <p><?= $current_language == 'ru' ? 'читать подробнее про флот' : '
+read more about the fleet' ?></p>
+          <svg xmlns="http://www.w3.org/2000/svg" width="5" height="10" viewBox="0 0 5 10" fill="none">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H2.14286L5 5L2.14286 10H0L2.85714 5L0 0Z"
+              fill="currentColor" />
+          </svg>
+        </a>
+      </div>
+    </section>
+	<?php endif; ?>
+    <div class="container">
+      <section class="form-container card card--primary">
+        <h2 class="form-container__title title title--h2"><?= $current_language == 'ru' ? 'Свяжитесь с нами, чтобы рассчитать точную стоимость' : 'Contact us to calculate the exact cost' ?></h2>
+        <p class="form-container__text"><?= $current_language == 'ru' ? 'Работаем только с юридическими лицами' : 'We work only with legal entities' ?></p>
+		<?php get_template_part( 'template-parts/form' ) ?>
+      </section>
+    </div>
+  </main>
+
+<?php
+get_footer();

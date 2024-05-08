@@ -1,0 +1,69 @@
+/*
+ * Theme Name: NecoLine
+ * Description: Ultra-minimal WordPress starter theme. Optimized for converting html-layouts to websites. Also is a good start for SPA, creating unique projects.
+*/
+.d-none{
+	display:none;
+}
+.documentations .documentations__item + .docs-text {
+    display: none;
+}
+.loader{
+    display: block;
+    background: url(assets/img/loading.gif) center/cover no-repeat;
+    width: 80px;
+    height: 80px;
+    margin: -40px auto 40px;
+}
+.vessel-no-found {
+    margin-bottom: 60px;
+}
+#wpcf7-f587-o1 {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    z-index: 2;
+}
+.form-container__submit{
+	display:none;
+}
+.form-container.step-2 .form-container__submit {
+    display: block;
+	width: 285px;
+	cursor:pointer;
+}
+.wpcf7 form.sent .wpcf7-response-output {
+    border: 0;
+}
+.head__text {
+    margin-top: 20px;
+}
+.head__text--ships{
+	margin-bottom: 20px;
+}
+.ui-autocomplete {
+    z-index: 9;
+    position: absolute !important;
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid;
+}
+li.ui-menu-item {
+    cursor: pointer;
+}
+li.ui-menu-item:hover {
+    color: #4589df;
+}
+select.input.station_start {
+    padding-right: 40px;
+}
+.form__card .wpcf7-response-output{
+	display:none;
+}
+.wpcf7-not-valid-tip {
+    font-size: 0.7em;
+}
+input, textarea{
+	background: transparent;
+}

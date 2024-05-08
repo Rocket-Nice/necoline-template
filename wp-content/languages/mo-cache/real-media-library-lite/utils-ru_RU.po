@@ -1,0 +1,92 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: n/a\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: n/a\n"
+"PO-Revision-Date: 2023-11-10 10:19+0000\n"
+"Last-Translator: Matthias Günter <matthias.guenter@devowl.io>\n"
+"Language-Team: Russian (formal) <https://translate.devowl.io/projects/devowl-"
+"wp-utils-backend-php/develop/ru@formal/>\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.1.1\n"
+
+#. translators:
+#: Localization.php:455
+msgid ""
+"Some language packs could not be downloaded for the textdomain %1$s (Error: "
+"%2$s, Endpoint: %3$s)."
+msgstr ""
+"Не удалось загрузить некоторые языковые пакеты для текстового домена %1$s "
+"(Error: %2$s, Endpoint: %3$s)."
+
+#: Localization.php:506
+msgid "Retry"
+msgstr "Повторить попытку"
+
+#: RateLimitNotice.php:61
+msgid " and "
+msgstr ""
+
+#. translators:
+#: RateLimitNotice.php:68
+msgid ""
+"Your WordPress unexpectedly requests the license server and cloud services "
+"of <strong>%1$s</strong> exceptionally often (URL: <code>%3$s</code>). This "
+"indicates a misconfiguration of your WordPress system, which can also affect "
+"the loading speed of your website or cause malfunctions. Please check with "
+"your technical contact what is configured incorrectly! Alternatively, you "
+"can <a href=\"%2$s\" target=\"_blank\">open a support ticket</a> at the "
+"plugin manufacturer support."
+msgstr ""
+
+#: RateLimitNotice.php:73
+msgid "https://devowl.io/support/"
+msgstr ""
+
+#: RateLimitNotice.php:82
+msgid ""
+"I have solved the problem (hide the message until the next occurrence of the "
+"error)"
+msgstr ""
+
+#. translators:
+#: Service.php:116
+msgid ""
+"<strong>An unexpected network error has occurred!</strong> One or more "
+"WordPress plugins tried to call the WordPress REST API, which failed. Most "
+"likely a <strong>security plugin%s</strong>, a web <strong>server "
+"configuration</strong> or active <strong>ad-blocker extension</strong> "
+"installed on your browser disabled the REST API. Please make sure that the "
+"following REST API namespaces are reachable to use your plugin without "
+"problems:"
+msgstr ""
+"<strong>Произошла непредвиденная сетевая ошибка!</strong> Один или несколько "
+"плагинов WordPress попытались вызвать WordPress REST API, что не удалось. "
+"Скорее всего, <strong>плагин безопасности%s</strong> , веб-конфигурация "
+"<strong>сервера</strong> или активное <strong>расширение блокировщика "
+"рекламы</strong>, установленное в Вашем браузере, отключили REST API. "
+"Пожалуйста, убедитесь, что следующие пространства имен REST API доступны, "
+"чтобы использовать Ваш плагин без проблем:"
+
+#. translators:
+#: Service.php:124
+msgid ""
+"What is the WordPress REST API and how to enable it? %1$sLearn more%2$s."
+msgstr "Что такое API REST WordPress и как его включить? %1$sПодробнее%2$s."
+
+#: Service.php:127
+msgid "https://devowl.io/knowledge-base/wordpress-rest-api-does-not-respond/"
+msgstr "https://devowl.io/knowledge-base/wordpress-rest-api-does-not-respond/"
+
+#: Service.php:135
+msgid ""
+"In the text box below you will find a technical listing of the last 10 "
+"failed network requests:"
+msgstr ""
+"В текстовом поле ниже Вы найдете технический список последних 10 неудачных "
+"сетевых запросов:"

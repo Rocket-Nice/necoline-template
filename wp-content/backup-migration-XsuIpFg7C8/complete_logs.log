@@ -1,0 +1,64 @@
+[2024-01-13 00:44:30] [LOG] Создание резервной копии 
+[2024-01-13 00:44:30] [LOG] Обнаружено 3125 файлы для резервного копирования.
+[2024-01-13 00:44:42] [LOG] Создана новая резервная копия под именем: BM_Backup_2024-01-13_00_44_24_wB0UnlcLdRA9IESg.zip
+[2024-01-15 23:28:59] [LOG] Создание резервной копии 
+[2024-01-15 23:28:59] [LOG] Обнаружено 3140 файлы для резервного копирования.
+[2024-01-15 23:29:11] [LOG] Создана новая резервная копия под именем: BM_Backup_2024-01-15_23_28_58_MQ5gcBRWsjZmefrG.zip
+[2024-01-15 23:29:12] [LOG] CLI response:
+[2024-01-15 23:29:12] [LOG] {"status":"success","filename":"BM_Backup_2024-01-15_23_28_58_MQ5gcBRWsjZmefrG.zip","root":"http:\/\/necoline.net\/wp-content\/plugins\/backup-backup\/"}
+[2024-01-15 23:46:08] [ERROR] Front End Ajax Error START
+[2024-01-15 23:46:08] [ERROR] call = is-running-backup
+[2024-01-15 23:46:08] [ERROR] 0_readyState = 0
+[2024-01-15 23:46:08] [ERROR] 0_status = 0
+[2024-01-15 23:46:08] [ERROR] 0_statusText = error
+[2024-01-15 23:46:08] [ERROR] 1_x = is-running-backup
+[2024-01-15 23:46:08] [ERROR] 2_action = backup_migration
+[2024-01-15 23:46:08] [ERROR] 2_token = bmi
+[2024-01-15 23:46:08] [ERROR] 2_nonce = 64ef1168e8
+[2024-01-15 23:46:08] [ERROR] 2_f = is-running-backup
+[2024-01-15 23:46:08] [ERROR] Front End Ajax Error END
+[2024-01-15 23:52:41] [ERROR] Front End Ajax Error START
+[2024-01-15 23:52:41] [ERROR] call = is-running-backup
+[2024-01-15 23:52:41] [ERROR] 0_readyState = 0
+[2024-01-15 23:52:41] [ERROR] 0_status = 0
+[2024-01-15 23:52:41] [ERROR] 0_statusText = error
+[2024-01-15 23:52:41] [ERROR] 1_x = is-running-backup
+[2024-01-15 23:52:41] [ERROR] 2_action = backup_migration
+[2024-01-15 23:52:41] [ERROR] 2_token = bmi
+[2024-01-15 23:52:41] [ERROR] 2_nonce = 64ef1168e8
+[2024-01-15 23:52:41] [ERROR] 2_f = is-running-backup
+[2024-01-15 23:52:41] [ERROR] Front End Ajax Error END
+[2024-01-15 23:59:10] [ERROR] Front End Ajax Error START
+[2024-01-15 23:59:10] [ERROR] call = is-running-backup
+[2024-01-15 23:59:10] [ERROR] 0_readyState = 0
+[2024-01-15 23:59:10] [ERROR] 0_status = 0
+[2024-01-15 23:59:10] [ERROR] 0_statusText = error
+[2024-01-15 23:59:10] [ERROR] 1_x = is-running-backup
+[2024-01-15 23:59:10] [ERROR] 2_action = backup_migration
+[2024-01-15 23:59:10] [ERROR] 2_token = bmi
+[2024-01-15 23:59:10] [ERROR] 2_nonce = 64ef1168e8
+[2024-01-15 23:59:10] [ERROR] 2_f = is-running-backup
+[2024-01-15 23:59:10] [ERROR] Front End Ajax Error END
+[2024-01-16 00:01:05] [ERROR] Front End Ajax Error START
+[2024-01-16 00:01:05] [ERROR] call = is-running-backup
+[2024-01-16 00:01:05] [ERROR] 0_readyState = 0
+[2024-01-16 00:01:05] [ERROR] 0_status = 0
+[2024-01-16 00:01:05] [ERROR] 0_statusText = error
+[2024-01-16 00:01:05] [ERROR] 1_x = is-running-backup
+[2024-01-16 00:01:05] [ERROR] 2_action = backup_migration
+[2024-01-16 00:01:05] [ERROR] 2_token = bmi
+[2024-01-16 00:01:05] [ERROR] 2_nonce = 64ef1168e8
+[2024-01-16 00:01:05] [ERROR] 2_f = is-running-backup
+[2024-01-16 00:01:05] [ERROR] Front End Ajax Error END
+[2024-02-06 21:32:22] [LOG] Создание резервной копии 
+[2024-02-06 21:32:22] [LOG] Обнаружено 4235 файлы для резервного копирования.
+[2024-02-06 21:32:38] [LOG] Создана новая резервная копия под именем: BM_Backup_2024-02-06_21_32_22_Ig1ELXYZcSNA9h5Q.zip
+[2024-02-06 21:32:38] [LOG] CLI response:
+[2024-02-06 21:32:38] [LOG] {"status":"success","filename":"BM_Backup_2024-02-06_21_32_22_Ig1ELXYZcSNA9h5Q.zip","root":"http:\/\/necoline.net\/wp-content\/plugins\/backup-backup\/"}
+[2024-03-11 14:50:09] [LOG] Создание резервной копии 
+[2024-03-11 14:50:09] [LOG] Обнаружено 5474 файлы для резервного копирования.
+[2024-03-11 14:50:29] [LOG] Создана новая резервная копия под именем: BM_Backup_2024-03-11_14_50_07_c7sONiWGjEBLnD4g.zip
+[2024-03-11 14:50:29] [LOG] CLI response:
+[2024-03-11 14:50:29] [LOG] {"status":"success","filename":"BM_Backup_2024-03-11_14_50_07_c7sONiWGjEBLnD4g.zip","root":"http:\/\/necoline.net\/wp-content\/plugins\/backup-backup\/"}
+[2024-04-19 09:28:11] [LOG] Плагин деактивирован
+[2024-04-19 09:28:21] [LOG] Плагин активирован
