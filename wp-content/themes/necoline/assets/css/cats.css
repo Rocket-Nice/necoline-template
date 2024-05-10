@@ -749,7 +749,7 @@ select.input {
     color: #314D71;
     background-color: #ede8d6;
     border-radius: 20px;
-    height: auto;
+    height: 100%;
     max-height: 50vh;
     width: 100%;
     display: flex;
@@ -773,7 +773,7 @@ select.input {
 }
 
 .custom-bg-block__icon-and-title img {
-    max-width: 60px;
+    max-width: 50px;
     width: 100%;
 }
 
@@ -783,6 +783,10 @@ select.input {
 }
 
 @media (max-width: 1201px) {
+    .custom-bg-block__icon-and-title img {
+        max-width: 35px;
+        width: 100%;
+    }
 
     .news__custom-bg-block,
     .news-item-container .news__custom-bg-block {
@@ -800,9 +804,5 @@ select.input {
     .news-item-container .news__custom-bg-block {
         font-size: 22px;
         padding: 30px 10px 50px 10px;
-    }
-
-    .news__custom-bg-block img {
-        max-width: 40px;
     }
 }
