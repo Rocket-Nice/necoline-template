@@ -756,7 +756,7 @@ select.input {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    font-size: 30px;
+    font-size: 1.5vw;
     line-height: 1.2;
     font-weight: bold;
     padding: 50px 10px 80px 10px;
@@ -780,6 +780,7 @@ select.input {
 .news-item-container .news__custom-bg-block {
     padding: 10px;
     max-height: 30vh;
+    font-size: 1.2vw;
 }
 
 @media (max-width: 1201px) {
@@ -788,13 +789,16 @@ select.input {
         width: 100%;
     }
 
-    .news__custom-bg-block,
-    .news-item-container .news__custom-bg-block {
-        font-size: 20px;
-    }
-
     .news-item-container .news__custom-bg-block {
         padding: 40px 10px 60px 10px;
+    }
+}
+
+@media (max-width: 900px) {
+
+    .news__custom-bg-block,
+    .news-item-container .news__custom-bg-block {
+        font-size: 3vw;
     }
 }
 
