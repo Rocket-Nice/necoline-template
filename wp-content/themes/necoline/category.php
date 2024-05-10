@@ -40,10 +40,24 @@ $current_language = pll_current_language();
             <div class="gallery">
                 <ul class="news__list gallery__item">
                     <?php $counter = 0; ?>
-                    <?php while ($news_posts->have_posts()) : $news_posts->the_post(); ?>
+                    <?php while ($news_posts->have_posts()) : $news_posts->the_post();
+                        // Получаем значение мета поля для текущей записи
+                        $custom_description = get_post_meta(get_the_ID(), 'custom_description_meta_key', true);
+                    ?>
                         <?php if ($counter === 0) : ?>
                             <li class="new">
-                                <img alt="<?php the_title(); ?>" class="new__img" src="<?php the_post_thumbnail_url(); ?>">
+                                <?php if (has_post_thumbnail()) { ?>
+                                    <img alt="<?php the_title(); ?>" class="new__img" src="<?php the_post_thumbnail_url(); ?>">
+                                <?php } else { ?>
+                                    <div class="news__custom-bg-block">
+                                        <div class="custom-bg-block__icon-and-title">
+                                            <img src="<?php theme_image('bird-logo.svg'); ?>" alt="<?php the_title(); ?>">
+                                            <span>NECO LINE</span>
+                                        </div>
+                                        <span><?= $custom_description; ?></span>
+                                    </div>
+                                <?php } ?>
+
                                 <div class="new__text-container">
                                     <p class="new__date text"><?php the_time('d.m.Y'); ?></p>
                                     <h3 class="new__title title title--h5"><?php the_title(); ?></h3>
@@ -54,7 +68,17 @@ $current_language = pll_current_language();
                         <?php elseif ($counter === 1) : ?>
                             <div class="news-item-container">
                                 <li class="new">
-                                    <img alt="<?php the_title(); ?>" class="new__img" src="<?php the_post_thumbnail_url(); ?>">
+                                    <?php if (has_post_thumbnail()) { ?>
+                                        <img alt="<?php the_title(); ?>" class="new__img" src="<?php the_post_thumbnail_url(); ?>">
+                                    <?php } else { ?>
+                                        <div class="news__custom-bg-block">
+                                            <div class="custom-bg-block__icon-and-title">
+                                                <img src="<?php theme_image('bird-logo.svg'); ?>" alt="<?php the_title(); ?>">
+                                                <span>NECO LINE</span>
+                                            </div>
+                                            <span><?= $custom_description; ?></span>
+                                        </div>
+                                    <?php } ?>
                                     <div class="new__text-container">
                                         <p class="new__date text"><?php the_time('d.m.Y'); ?></p>
                                         <h3 class="new__title title title--h5"><?php the_title(); ?></h3>
@@ -64,7 +88,17 @@ $current_language = pll_current_language();
                                 </li>
                             <?php elseif ($counter === 2) : ?>
                                 <li class="new">
-                                    <img alt="<?php the_title(); ?>" class="new__img" src="<?php the_post_thumbnail_url(); ?>">
+                                    <?php if (has_post_thumbnail()) { ?>
+                                        <img alt="<?php the_title(); ?>" class="new__img" src="<?php the_post_thumbnail_url(); ?>">
+                                    <?php } else { ?>
+                                        <div class="news__custom-bg-block">
+                                            <div class="custom-bg-block__icon-and-title">
+                                                <img src="<?php theme_image('bird-logo.svg'); ?>" alt="<?php the_title(); ?>">
+                                                <span>NECO LINE</span>
+                                            </div>
+                                            <span><?= $custom_description; ?></span>
+                                        </div>
+                                    <?php } ?>
                                     <div class="new__text-container">
                                         <p class="new__date text"><?php the_time('d.m.Y'); ?></p>
                                         <h3 class="new__title title title--h5"><?php the_title(); ?></h3>
@@ -75,7 +109,17 @@ $current_language = pll_current_language();
                             </div><!-- close .news-item-container -->
                         <?php else : ?>
                             <li class="new">
-                                <img alt="<?php the_title(); ?>" class="new__img" src="<?php the_post_thumbnail_url(); ?>">
+                                <?php if (has_post_thumbnail()) { ?>
+                                    <img alt="<?php the_title(); ?>" class="new__img" src="<?php the_post_thumbnail_url(); ?>">
+                                <?php } else { ?>
+                                    <div class="news__custom-bg-block">
+                                        <div class="custom-bg-block__icon-and-title">
+                                            <img src="<?php theme_image('bird-logo.svg'); ?>" alt="<?php the_title(); ?>">
+                                            <span>NECO LINE</span>
+                                        </div>
+                                        <span><?= $custom_description; ?></span>
+                                    </div>
+                                <?php } ?>
                                 <div class="new__text-container">
                                     <p class="new__date text"><?php the_time('d.m.Y'); ?></p>
                                     <h3 class="new__title title title--h5"><?php the_title(); ?></h3>

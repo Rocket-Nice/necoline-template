@@ -1,8 +1,8 @@
-<?php 
+<?php
 //THEME SUPPORTS
-add_action( 'after_setup_theme', function(){
-	add_theme_support( 'title-tag' );
-	add_theme_support( 'post-thumbnails' );
+add_action('after_setup_theme', function () {
+	add_theme_support('title-tag');
+	add_theme_support('post-thumbnails');
 });
 $current_language = pll_current_language();
 
@@ -16,9 +16,10 @@ require_once get_template_directory() . '/inc/theme-image.php';
 
 
 //THEME MENUS
-add_action( 'after_setup_theme', 'neco_register_nav_menu' );
+add_action('after_setup_theme', 'neco_register_nav_menu');
 
-function neco_register_nav_menu() {
+function neco_register_nav_menu()
+{
 	// register_nav_menu( 'main', 'Top Menu' );
 	register_nav_menus([
 		'main' => esc_html__('Основное меню'),
@@ -29,41 +30,43 @@ function neco_register_nav_menu() {
 		'footer_menu_4' => esc_html__('Меню в подвале 4'),
 	]);
 }
-add_filter( 'nav_menu_item_id', 'filter_menu_item_css_id', 10, 4 );
-function filter_menu_item_css_id( $menu_id, $item, $args, $depth ) {
+add_filter('nav_menu_item_id', 'filter_menu_item_css_id', 10, 4);
+function filter_menu_item_css_id($menu_id, $item, $args, $depth)
+{
 	return $args->theme_location === 'main' ? '' : $menu_id;
 }
 
 // Изменяем атрибут class у тега li
-add_filter( 'nav_menu_css_class', 'filter_nav_menu_css_classes', 10, 4 );
-function filter_nav_menu_css_classes( $classes, $item, $args, $depth ) {
-	if ( $args->theme_location === 'main' ) {
+add_filter('nav_menu_css_class', 'filter_nav_menu_css_classes', 10, 4);
+function filter_nav_menu_css_classes($classes, $item, $args, $depth)
+{
+	if ($args->theme_location === 'main') {
 		$classes = [];
-		if ( $depth == 0 ) {
+		if ($depth == 0) {
 			$classes = [
 				'main-header__item'
 			];
 		}
 
 		global $wpdb;
-		$has_children = $wpdb->get_var("SELECT COUNT(meta_id) FROM wp_postmeta WHERE meta_key='_menu_item_menu_item_parent' AND meta_value='".$item->ID."'");
+		$has_children = $wpdb->get_var("SELECT COUNT(meta_id) FROM wp_postmeta WHERE meta_key='_menu_item_menu_item_parent' AND meta_value='" . $item->ID . "'");
 		if ($has_children > 0) {
 			$classes[] = 'drop-down';
 		}
 
-		if ( $item->current ) {
+		if ($item->current) {
 			$classes[] = 'menu--active';
 		}
-		if ( $depth > 0 ) {
+		if ($depth > 0) {
 			$classes[] = 'main-header__inner-item';
 		}
 		// var_dump($item);
 	}
-	if ( $args->theme_location === 'mobile' ) {
+	if ($args->theme_location === 'mobile') {
 		if (in_array('menu-item-has-children', $classes)) {
 			$dropdown = true;
 		}
-		if ( $dropdown ) {
+		if ($dropdown) {
 			$classes[] = 'mobile-menu__item';
 			$args->before = '<div class="mobile-menu__link-container">';
 			$args->after = '<button class="mobile-menu__more-button"></button></div>';
@@ -77,14 +80,15 @@ function filter_nav_menu_css_classes( $classes, $item, $args, $depth ) {
 }
 
 // Изменяет класс у вложенного ul
-add_filter( 'nav_menu_submenu_css_class', 'filter_nav_menu_submenu_css_class', 10, 3 );
-function filter_nav_menu_submenu_css_class( $classes, $args, $depth ) {
-	if ( $args->theme_location === 'main' ) {
+add_filter('nav_menu_submenu_css_class', 'filter_nav_menu_submenu_css_class', 10, 3);
+function filter_nav_menu_submenu_css_class($classes, $args, $depth)
+{
+	if ($args->theme_location === 'main') {
 		$classes = [
 			'main-header__inner-list'
 		];
 	}
-	if ( $args->theme_location === 'mobile' ) {
+	if ($args->theme_location === 'mobile') {
 		$classes = [
 			'mobile-menu__inner-list'
 		];
@@ -94,21 +98,22 @@ function filter_nav_menu_submenu_css_class( $classes, $args, $depth ) {
 }
 
 // ДОбавляем классы ссылкам
-add_filter( 'nav_menu_link_attributes', 'filter_nav_menu_link_attributes', 10, 4 );
-function filter_nav_menu_link_attributes( $atts, $item, $args, $depth ) {
-	if ( $args->theme_location === 'main' ) {
+add_filter('nav_menu_link_attributes', 'filter_nav_menu_link_attributes', 10, 4);
+function filter_nav_menu_link_attributes($atts, $item, $args, $depth)
+{
+	if ($args->theme_location === 'main') {
 		$atts['class'] = 'main-header__link title title--h6';
 
-		if ( $item->current ) {
+		if ($item->current) {
 			$atts['class'] .= ' menu-link--active';
 		}
-		if ( $depth > 0 ) {
+		if ($depth > 0) {
 			$atts['class'] = 'main-header__inner-link';
 		}
 	}
-	if ( $args->theme_location === 'mobile' ) {
+	if ($args->theme_location === 'mobile') {
 		$atts['class'] = 'mobile-menu__link title title--h6';
-		if ( $depth > 0 ) {
+		if ($depth > 0) {
 			$atts['class'] = 'mobile-menu__inner-link title title--h6';
 		}
 	}
@@ -117,135 +122,142 @@ function filter_nav_menu_link_attributes( $atts, $item, $args, $depth ) {
 }
 
 //THEME STYLES & SCRIPTS
-add_action( 'wp_enqueue_scripts', 'theme_styles_and_scripts' );	
+add_action('wp_enqueue_scripts', 'theme_styles_and_scripts');
 
-function theme_styles_and_scripts() {
+function theme_styles_and_scripts()
+{
 	$ver = '1.4';
 	$css_url = get_template_directory_uri() . '/assets/css/';
 	$js_url = get_template_directory_uri() . '/assets/js/';
 
 	//Enqueue Fonts
-	wp_enqueue_style( 'Roboto', 'https://fonts.googleapis.com/css2?family=Roboto&display=swap', array(), null);
-	wp_enqueue_style( 'HalvarBd', get_template_directory_uri() . '/assets/fonts/HalvarBreit-Bd/style.css', array(), null);
-	wp_enqueue_style( 'HalvarRg', get_template_directory_uri() . '/assets/fonts/HalvarBreit-Rg/style.css', array(), null);
-	
-	//Enqueue main theme style
-	wp_enqueue_style( 'css-main', get_stylesheet_uri(), array(), $ver);
-	
-	//Enqueue additional .css files
-	wp_enqueue_style( 'css-variables', $css_url . 'variables.css', array(), $ver);
-	wp_enqueue_style( 'css-normalize', $css_url . 'normalize.css', array(), $ver);
-	
-	wp_enqueue_style( 'main-css', $css_url . 'main.css', array(), $ver);
-	
-	//Enqueue .js files
-	wp_enqueue_script( 'imask-js', $js_url . 'imask.js', array(), $ver, true);
-	wp_enqueue_script( 'custom-js', $js_url . 'custom.js', array(), $ver, true);
-    wp_enqueue_script( 'main-js', $js_url . 'main.js', array('jquery'), $ver, true);
+	wp_enqueue_style('Roboto', 'https://fonts.googleapis.com/css2?family=Roboto&display=swap', array(), null);
+	wp_enqueue_style('HalvarBd', get_template_directory_uri() . '/assets/fonts/HalvarBreit-Bd/style.css', array(), null);
+	wp_enqueue_style('HalvarRg', get_template_directory_uri() . '/assets/fonts/HalvarBreit-Rg/style.css', array(), null);
 
-	if ( is_page_template( 'schedule-ships.php' ) ){
-		wp_enqueue_style( 'schedule-css', $css_url . 'schedule.css', array(), $ver);
-		wp_enqueue_script( 'schedule-js', $js_url . 'schedule.js', array('jquery'), $ver, true);
+	//Enqueue main theme style
+	wp_enqueue_style('css-main', get_stylesheet_uri(), array(), $ver);
+
+	//Enqueue additional .css files
+	wp_enqueue_style('css-variables', $css_url . 'variables.css', array(), $ver);
+	wp_enqueue_style('css-normalize', $css_url . 'normalize.css', array(), $ver);
+
+	wp_enqueue_style('main-css', $css_url . 'main.css', array(), $ver);
+
+	//Enqueue .js files
+	wp_enqueue_script('imask-js', $js_url . 'imask.js', array(), $ver, true);
+	wp_enqueue_script('custom-js', $js_url . 'custom.js', array(), $ver, true);
+	wp_enqueue_script('main-js', $js_url . 'main.js', array('jquery'), $ver, true);
+
+	if (is_page_template('schedule-ships.php')) {
+		wp_enqueue_style('schedule-css', $css_url . 'schedule.css', array(), $ver);
+		wp_enqueue_script('schedule-js', $js_url . 'schedule.js', array('jquery'), $ver, true);
 		//wp_localize_script( 'schedule-js', 'necoajax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		//wp_enqueue_script( 'schedule-js');
 		wp_register_script('my-custom-script', get_template_directory_uri() . '/assets/js/ajax-filter.js', array('jquery'), $ver, true);
-		wp_localize_script( 'my-custom-script', 'myScriptParams', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		wp_enqueue_script( 'my-custom-script');
+		wp_localize_script('my-custom-script', 'myScriptParams', array('ajaxurl' => admin_url('admin-ajax.php')));
+		wp_enqueue_script('my-custom-script');
 	}
-	if ( is_page_template( 'main-page.php' ) ) {
-		wp_enqueue_style( 'main-page-css', $css_url . 'main-page.css', array(), $ver);
-		wp_enqueue_script( 'main-page-js', $js_url . 'main-page.js', array('jquery'), $ver, true);
+	if (is_page_template('main-page.php')) {
+		wp_enqueue_style('main-page-css', $css_url . 'main-page.css', array(), $ver);
+		wp_enqueue_script('main-page-js', $js_url . 'main-page.js', array('jquery'), $ver, true);
 	}
-	if ( is_404() ) {
-		wp_enqueue_style( '404-css', $css_url . '404.css', array(), $ver);
-		wp_enqueue_script( '404-js', $js_url . '404.js', array('jquery'), $ver, true);
+	if (is_404()) {
+		wp_enqueue_style('404-css', $css_url . '404.css', array(), $ver);
+		wp_enqueue_script('404-js', $js_url . '404.js', array('jquery'), $ver, true);
 	}
-	if ( is_page_template('page-about.php') ) {
-		wp_enqueue_style( 'about-css', $css_url . 'about-company.css', array(), $ver);
-		wp_enqueue_style( 'team-css', $css_url . 'team-page.css', array(), $ver);
-		wp_enqueue_script( 'about-js', $js_url . 'about-company.js', array('jquery'), $ver, true);
-		wp_enqueue_script( 'team-js', $js_url . 'team-page.js', array('jquery'), $ver, true);
+	if (is_page_template('page-about.php')) {
+		wp_enqueue_style('about-css', $css_url . 'about-company.css', array(), $ver);
+		wp_enqueue_style('team-css', $css_url . 'team-page.css', array(), $ver);
+		wp_enqueue_script('about-js', $js_url . 'about-company.js', array('jquery'), $ver, true);
+		wp_enqueue_script('team-js', $js_url . 'team-page.js', array('jquery'), $ver, true);
 	}
-	if ( is_page_template('page-activities.php') ) {
-		wp_enqueue_style( 'activities-css', $css_url . 'activities.css', array(), $ver);
-		wp_enqueue_script( 'activities-js', $js_url . 'activities.js', array('jquery'), $ver, true);
+	if (is_page_template('page-activities.php')) {
+		wp_enqueue_style('activities-css', $css_url . 'activities.css', array(), $ver);
+		wp_enqueue_script('activities-js', $js_url . 'activities.js', array('jquery'), $ver, true);
 	}
-	if ( is_page_template('page-services.php') ) {
-		wp_enqueue_style( 'services-css', $css_url . 'services-page.css', array(), $ver);
-		wp_enqueue_script( 'services-js', $js_url . 'services-page.js', array('jquery'), $ver, true);
+	if (is_page_template('page-services.php')) {
+		wp_enqueue_style('services-css', $css_url . 'services-page.css', array(), $ver);
+		wp_enqueue_script('services-js', $js_url . 'services-page.js', array('jquery'), $ver, true);
 	}
-	if ( is_page_template('schedule-railway.php') ) {
-		wp_enqueue_style( 'railway-css', $css_url . 'railway-schedule.css', array(), $ver);
-		wp_enqueue_script( 'railway-js', $js_url . 'railway-schedule.js', array('jquery'), $ver, true);
-		wp_enqueue_script( 'jquery-ui-autocomplete' );
+	if (is_page_template('schedule-railway.php')) {
+		wp_enqueue_style('railway-css', $css_url . 'railway-schedule.css', array(), $ver);
+		wp_enqueue_script('railway-js', $js_url . 'railway-schedule.js', array('jquery'), $ver, true);
+		wp_enqueue_script('jquery-ui-autocomplete');
 		wp_register_script('railway-filter', get_template_directory_uri() . '/assets/js/ajax-filter-railway.js', array('jquery'), $ver, true);
-		wp_localize_script( 'railway-filter', 'ajax_object', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		wp_enqueue_script( 'railway-filter');
+		wp_localize_script('railway-filter', 'ajax_object', array('ajaxurl' => admin_url('admin-ajax.php')));
+		wp_enqueue_script('railway-filter');
 	}
-	if ( is_page_template('page-documents.php') ) {
-		wp_enqueue_style( 'documentations-css', $css_url . 'documentations.css', array(), $ver);
-		wp_enqueue_script( 'documentations-js', $js_url . 'documentations.js', array('jquery'), $ver, true);
+	if (is_page_template('page-documents.php')) {
+		wp_enqueue_style('documentations-css', $css_url . 'documentations.css', array(), $ver);
+		wp_enqueue_script('documentations-js', $js_url . 'documentations.js', array('jquery'), $ver, true);
 	}
-	if ( is_page_template('page-contacts.php') ) {
-		wp_enqueue_style( 'contacts-css', $css_url . 'contacts.css', array(), $ver);
-		wp_enqueue_script( 'contacts-js', $js_url . 'contacts.js', array('jquery'), $ver, true);
+	if (is_page_template('page-contacts.php')) {
+		wp_enqueue_style('contacts-css', $css_url . 'contacts.css', array(), $ver);
+		wp_enqueue_script('contacts-js', $js_url . 'contacts.js', array('jquery'), $ver, true);
 	}
-	if ( is_page_template('page-shipping.php') ) {
-		wp_enqueue_style( 'shipping-css', $css_url . 'shipping-page.css', array(), $ver);
-		wp_enqueue_script( 'shipping-js', $js_url . 'shipping-page.js', array('jquery'), $ver, true);
+	if (is_page_template('page-shipping.php')) {
+		wp_enqueue_style('shipping-css', $css_url . 'shipping-page.css', array(), $ver);
+		wp_enqueue_script('shipping-js', $js_url . 'shipping-page.js', array('jquery'), $ver, true);
 	}
-	if ( is_tax('directions' ) ) {
-		wp_enqueue_style( 'directions-css', $css_url . 'directions.css', array(), $ver);
-		wp_enqueue_script( 'directions-js', $js_url . 'directions.js', array('jquery'), $ver, true);
+	if (is_tax('directions')) {
+		wp_enqueue_style('directions-css', $css_url . 'directions.css', array(), $ver);
+		wp_enqueue_script('directions-js', $js_url . 'directions.js', array('jquery'), $ver, true);
 	}
-	if ( is_page_template('ships.php') ) {
-		wp_enqueue_style( 'ship-css', $css_url . 'ship-page.css', array(), $ver);
-		wp_enqueue_script( 'ship-js', $js_url . 'ship-page.js', array('jquery'), $ver, true);
+	if (is_page_template('ships.php')) {
+		wp_enqueue_style('ship-css', $css_url . 'ship-page.css', array(), $ver);
+		wp_enqueue_script('ship-js', $js_url . 'ship-page.js', array('jquery'), $ver, true);
 	}
-	if ( is_singular('services' ) ) {
-		wp_enqueue_style( 'service-css', $css_url . 'directions-service.css', array(), $ver);
-		wp_enqueue_script( 'service-js', $js_url . 'directions-service.js', array('jquery'), $ver, true);
+	if (is_singular('services')) {
+		wp_enqueue_style('service-css', $css_url . 'directions-service.css', array(), $ver);
+		wp_enqueue_script('service-js', $js_url . 'directions-service.js', array('jquery'), $ver, true);
 	}
-	if ( is_page_template('page-multimodal.php') ) {
-		wp_enqueue_style( 'multimodal-css', $css_url . 'multimodal.css', array(), $ver);
-		wp_enqueue_script( 'multimodal-js', $js_url . 'multimodal.js', array('jquery'), $ver, true);
+	if (is_page_template('page-multimodal.php')) {
+		wp_enqueue_style('multimodal-css', $css_url . 'multimodal.css', array(), $ver);
+		wp_enqueue_script('multimodal-js', $js_url . 'multimodal.js', array('jquery'), $ver, true);
 	}
-	if ( is_category() ) {
-		wp_enqueue_style( 'cats-css', $css_url . 'cats.css', array(), $ver);
+	if (is_category()) {
+		wp_enqueue_style('cats-css', $css_url . 'cats.css', array(), $ver);
 		// wp_enqueue_script( 'cats-js', $js_url . 'cats.js', array('jquery'), $ver, true);
 		wp_register_script('cats-pagination', get_template_directory_uri() . '/assets/js/cats-pagination.js', array('jquery'), $ver, true);
-		wp_localize_script( 'cats-pagination', 'ajax_object', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		wp_enqueue_script( 'cats-pagination' );
-		wp_enqueue_script( 'cats-custom', $js_url . 'cats-custom.js', array(), $ver, true);
+		wp_localize_script('cats-pagination', 'ajax_object', array('ajaxurl' => admin_url('admin-ajax.php')));
+		wp_enqueue_script('cats-pagination');
+		wp_enqueue_script('cats-custom', $js_url . 'cats-custom.js', array(), $ver, true);
 	}
-	if ( is_single() ) {
-		wp_enqueue_style( 'post-css', $css_url . 'post.css', array(), $ver);
+	if (is_single()) {
+		wp_enqueue_style('post-css', $css_url . 'post.css', array(), $ver);
 	}
 }
 
 
 //ENABLING - DISABLING GUTENBERG FOR CERTAIN POST TYPES
-add_filter( 'use_block_editor_for_post_type', 'theme_gutenberg_support_for_post_types', 10, 2 );
+add_filter('use_block_editor_for_post_type', 'theme_gutenberg_support_for_post_types', 10, 2);
 
-function theme_gutenberg_support_for_post_types( $use_block_editor, $post_type ){
-	if ($post_type == 'post') { return true;	} else { return false; }
+function theme_gutenberg_support_for_post_types($use_block_editor, $post_type)
+{
+	if ($post_type == 'post') {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 //NecoLine
-if( function_exists('acf_add_options_page') ) {
+if (function_exists('acf_add_options_page')) {
 	acf_add_options_page(array(
-	  'page_title'  => 'Настройки темы',
-	  'menu_title'  => 'Настройки темы',
-	  'menu_slug'   => 'all-settings',
-	  'capability'  => 'edit_posts',
-	  'position'    => '30.1',
-	  'redirect'    => false,
-	  'icon_url'    => 'dashicons-screenoptions',
-	)); 
+		'page_title'  => 'Настройки темы',
+		'menu_title'  => 'Настройки темы',
+		'menu_slug'   => 'all-settings',
+		'capability'  => 'edit_posts',
+		'position'    => '30.1',
+		'redirect'    => false,
+		'icon_url'    => 'dashicons-screenoptions',
+	));
 }
 
-add_action( 'init', 'necoline_register_types' );
-function necoline_register_types(){
+add_action('init', 'necoline_register_types');
+function necoline_register_types()
+{
 	register_post_type('services', [
 		'labels'             => [
 			'name'               => 'Сервисы', // Основное название типа записи
@@ -266,10 +278,10 @@ function necoline_register_types(){
 		'menu_position'      => 20,
 		'menu_icon'          => 'dashicons-controls-repeat',
 		'hierarchical'       => 'false',
-		'supports'           => array('title','thumbnail'),
+		'supports'           => array('title', 'thumbnail'),
 		'has_arhive'         => true,
 	]);
-	register_taxonomy( 'directions', [ 'services', 'ships' ], [
+	register_taxonomy('directions', ['services', 'ships'], [
 		'labels'                => [
 			'name'              => 'Направления',
 			'singular_name'     => 'Направления',
@@ -285,7 +297,7 @@ function necoline_register_types(){
 		'description'           => '', // описание таксономии
 		'public'                => true,
 		'hierarchical'          => true
-	] );
+	]);
 	register_post_type('ships', [
 		'labels'             => [
 			'name'               => 'Флот', // Основное название типа записи
@@ -306,7 +318,7 @@ function necoline_register_types(){
 		'menu_position'      => 20,
 		'menu_icon'          => 'dashicons-sos',
 		'hierarchical'       => 'false',
-		'supports'           => array('title','thumbnail'),
+		'supports'           => array('title', 'thumbnail'),
 		'has_arhive'         => true,
 	]);
 	register_post_type('containers', [
@@ -329,7 +341,7 @@ function necoline_register_types(){
 		'menu_position'      => 20,
 		'menu_icon'          => 'dashicons-networking',
 		'hierarchical'       => 'false',
-		'supports'           => array('title','thumbnail','editor'),
+		'supports'           => array('title', 'thumbnail', 'editor'),
 		'has_arhive'         => true,
 	]);
 	register_post_type('ports_posts', [
@@ -352,10 +364,10 @@ function necoline_register_types(){
 		'menu_position'      => 20,
 		'menu_icon'          => 'dashicons-share',
 		'hierarchical'       => 'false',
-		'supports'           => array('title','thumbnail'),
+		'supports'           => array('title', 'thumbnail'),
 		'has_arhive'         => true,
 	]);
-	register_taxonomy( 'ports', [ 'ports_posts' ], [
+	register_taxonomy('ports', ['ports_posts'], [
 		'labels'                => [
 			'name'              => 'Типы портов',
 			'singular_name'     => 'Типы портов',
@@ -371,7 +383,7 @@ function necoline_register_types(){
 		'description'           => '', // описание таксономии
 		'public'                => true,
 		'hierarchical'          => true
-	] );
+	]);
 	register_post_type('schedule-1', [
 		'labels'             => [
 			'name'               => 'Список рейсов', // Основное название типа записи
@@ -392,10 +404,10 @@ function necoline_register_types(){
 		'menu_position'      => 20,
 		'menu_icon'          => 'dashicons-list-view',
 		'hierarchical'       => 'false',
-		'supports'           => array('title','thumbnail'),
+		'supports'           => array('title', 'thumbnail'),
 		'has_arhive'         => true,
 	]);
-	
+
 	register_post_type('stations', [
 		'labels'             => [
 			'name'               => 'Станции', // Основное название типа записи
@@ -416,10 +428,10 @@ function necoline_register_types(){
 		'menu_position'      => 21,
 		'menu_icon'          => 'dashicons-list-view',
 		'hierarchical'       => 'false',
-		'supports'           => array('title','thumbnail'),
+		'supports'           => array('title', 'thumbnail'),
 		'has_arhive'         => true,
 	]);
-	register_taxonomy( 'station_type', [ 'stations' ], [
+	register_taxonomy('station_type', ['stations'], [
 		'labels'                => [
 			'name'              => 'Типы Станций',
 			'singular_name'     => 'Типы Станций',
@@ -435,7 +447,7 @@ function necoline_register_types(){
 		'description'           => '', // описание таксономии
 		'public'                => true,
 		'hierarchical'          => true
-	] );
+	]);
 	// register_taxonomy( 'station_end', [ 'stations' ], [
 	// 	'labels'                => [
 	// 		'name'              => 'Станции назначения',
@@ -494,7 +506,7 @@ function necoline_register_types(){
 		'has_arhive'         => true,
 	]);
 
-    register_taxonomy( 'document_type', [ 'docs' ], [
+	register_taxonomy('document_type', ['docs'], [
 		'labels'                => [
 			'name'              => 'Типы документа',
 			'singular_name'     => 'Типы документов',
@@ -510,7 +522,7 @@ function necoline_register_types(){
 		'description'           => '', // описание таксономии
 		'public'                => true,
 		'hierarchical'          => true
-	] );
+	]);
 
 	register_post_type('team', [
 		'labels'             => [
@@ -532,10 +544,10 @@ function necoline_register_types(){
 		'menu_position'      => 20,
 		'menu_icon'          => 'dashicons-groups',
 		'hierarchical'       => 'false',
-		'supports'           => array('title','thumbnail'),
+		'supports'           => array('title', 'thumbnail'),
 		'has_arhive'         => true,
 	]);
-	register_taxonomy( 'departments', [ 'team' ], [
+	register_taxonomy('departments', ['team'], [
 		'labels'                => [
 			'name'              => 'Подразделения',
 			'singular_name'     => 'Подразделения',
@@ -551,56 +563,58 @@ function necoline_register_types(){
 		'description'           => '', // описание таксономии
 		'public'                => true,
 		'hierarchical'          => true
-	] );
-
+	]);
 }
 
-function neco_taxonomy_filter() {
+function neco_taxonomy_filter()
+{
 	global $typenow; // тип поста
-	if( $typenow == 'ports_posts' ){ // для каких типов постов отображать
+	if ($typenow == 'ports_posts') { // для каких типов постов отображать
 		$taxes = array('ports'); // таксономии через запятую
 		foreach ($taxes as $tax) {
-			$current_tax = isset( $_GET[$tax] ) ? $_GET[$tax] : '';
+			$current_tax = isset($_GET[$tax]) ? $_GET[$tax] : '';
 			$tax_obj = get_taxonomy($tax);
 			$tax_name = mb_strtolower($tax_obj->labels->name);
 			// функция mb_strtolower переводит в нижний регистр
 			// она может не работать на некоторых хостингах, если что, убирайте её отсюда
 			$terms = get_terms($tax);
-			if(count($terms) > 0) {
+			if (count($terms) > 0) {
 				echo "<select name='$tax' id='$tax' class='postform'>";
 				echo "<option value=''>Все $tax_name</option>";
 				foreach ($terms as $term) {
-					echo '<option value='. $term->slug, $current_tax == $term->slug ? ' selected="selected"' : '','>' . $term->name .' (' . $term->count .')</option>'; 
+					echo '<option value=' . $term->slug, $current_tax == $term->slug ? ' selected="selected"' : '', '>' . $term->name . ' (' . $term->count . ')</option>';
 				}
 				echo "</select>";
 			}
 		}
 	}
 }
- 
-add_action( 'restrict_manage_posts', 'neco_taxonomy_filter' );
+
+add_action('restrict_manage_posts', 'neco_taxonomy_filter');
 
 
 //Del ACF menu
 // add_action( 'admin_menu', 'true_remove_acf_menu' );
- 
+
 // function true_remove_acf_menu(){
 // 	remove_menu_page( 'edit.php?post_type=acf-field-group' );
 // }
 
 add_action('admin_menu', 'remove_admin_menu');
-function remove_admin_menu() {
+function remove_admin_menu()
+{
 	remove_menu_page('edit-comments.php'); // Комментарии	
 }
 
 //Test Filtr
-function my_enqueue_assets() {
-    wp_enqueue_script('my-custom-script', get_template_directory_uri() . '/assets/js/ajax-filter.js', array('jquery'), null, true);
+function my_enqueue_assets()
+{
+	wp_enqueue_script('my-custom-script', get_template_directory_uri() . '/assets/js/ajax-filter.js', array('jquery'), null, true);
 
-    wp_localize_script('my-custom-script', 'myScriptParams', array(
-        'ajaxurl' => admin_url('admin-ajax.php'),
-        // Другие локализованные данные, если необходимы
-    ));
+	wp_localize_script('my-custom-script', 'myScriptParams', array(
+		'ajaxurl' => admin_url('admin-ajax.php'),
+		// Другие локализованные данные, если необходимы
+	));
 }
 
 add_action('wp_enqueue_scripts', 'my_enqueue_assets');
@@ -634,7 +648,7 @@ function load_documents()
 	}
 
 	$query = new WP_Query($args);
-	?>
+?>
 	<div class="documentations">
 		<?php
 		if ($_POST['tab-index-doc'] === "0") {
@@ -850,7 +864,7 @@ function filter_posts_callback()
 			if ($skip_port || $isActive) {
 				continue;
 			}
-?>
+	?>
 
 			<section class="vessel-information">
 				<div class="vessel-information__title title title--h2"><?php echo get_field('schedule_1_ship', get_the_ID())->post_title; ?>
@@ -939,7 +953,7 @@ function filter_posts_callback()
 						</div> -->
 				</div>
 			</section>
-	<?php
+		<?php
 		endwhile;
 	endif;
 	// Завершаем буферизацию вывода и возвращаем его содержимое.
@@ -956,26 +970,27 @@ add_action('wp_ajax_filter_posts', 'filter_posts_callback');
 add_action('wp_ajax_nopriv_filter_posts', 'filter_posts_callback');
 
 //Сохраняем скрытое поле ACF
-function my_custom_acf_save_post($post_id) {
-    // Проверяем, является ли это обновлением записи
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
-    
-    // Проверяем разрешения пользователя
-    if (!current_user_can('edit_post', $post_id)) return;
+function my_custom_acf_save_post($post_id)
+{
+	// Проверяем, является ли это обновлением записи
+	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
 
-    // Проверяем тип записи
-    $post_type = get_post_type($post_id);
-    if ($post_type !== 'schedule-1') return;
+	// Проверяем разрешения пользователя
+	if (!current_user_can('edit_post', $post_id)) return;
 
-    // Поля, из которых мы будем брать данные
-    $ports = get_field('ports_repeat', $post_id);
-	
-	foreach ($ports as $port) : 
-		$portsFName .= ($port['ports_group']['port_name']->ID) .',';
+	// Проверяем тип записи
+	$post_type = get_post_type($post_id);
+	if ($post_type !== 'schedule-1') return;
+
+	// Поля, из которых мы будем брать данные
+	$ports = get_field('ports_repeat', $post_id);
+
+	foreach ($ports as $port) :
+		$portsFName .= ($port['ports_group']['port_name']->ID) . ',';
 	endforeach;
 
-    // Записываем в скрытое поле
-    update_field('ports_id', $portsFName, $post_id);
+	// Записываем в скрытое поле
+	update_field('ports_id', $portsFName, $post_id);
 }
 
 // Запускаем функцию при сохранении записи
@@ -984,8 +999,9 @@ add_action('acf/save_post', 'my_custom_acf_save_post', 20);
 //Hidden field ports_id
 add_action('admin_head', 'hide_acf_field');
 
-function hide_acf_field() {
-  echo '<style>.acf-field-6579a9d98dc31 { display: none; }</style>';
+function hide_acf_field()
+{
+	echo '<style>.acf-field-6579a9d98dc31 { display: none; }</style>';
 }
 
 // Contact Form 7 remove auto added p tags
@@ -997,12 +1013,13 @@ add_filter('wpcf7_autop_or_not', '__return_false');
 add_action('wp_ajax_search_stations_autocomplete', 'search_stations_autocomplete_callback');
 add_action('wp_ajax_nopriv_search_stations_autocomplete', 'search_stations_autocomplete_callback');
 
-function search_stations_autocomplete_callback() {
+function search_stations_autocomplete_callback()
+{
 	$term = sanitize_text_field($_POST['term']);
 
-    $results = array();
+	$results = array();
 	$page_id = 154;
-	
+
 	if (have_rows('shedule_rows', $page_id)) {
 		$unique_labels = array(); // Массив для хранения уникальных меток
 
@@ -1016,29 +1033,29 @@ function search_stations_autocomplete_callback() {
 			$distance = get_sub_field('distance');
 
 			// Проверяем, является ли метка уникальной
-            if (!in_array($label, $unique_labels)) {
-                $unique_labels[] = $label;
+			if (!in_array($label, $unique_labels)) {
+				$unique_labels[] = $label;
 
-                $result = array();
-                $result['label'] = mb_strtolower($label, 'UTF-8'); // Используем заголовок поста как метку в автозаполнении
-                $result['data'] = $station_data; // По желанию сохраняем ссылку для использования в событии select
-                $result['id'] = $station_end->ID;
-                $result['station_operation'] = $station_operation;
-                $result['distance'] = $distance;
-                $result['row'] = get_row_index() - 1;
-                $results[] = $result;
-            }
+				$result = array();
+				$result['label'] = mb_strtolower($label, 'UTF-8'); // Используем заголовок поста как метку в автозаполнении
+				$result['data'] = $station_data; // По желанию сохраняем ссылку для использования в событии select
+				$result['id'] = $station_end->ID;
+				$result['station_operation'] = $station_operation;
+				$result['distance'] = $distance;
+				$result['row'] = get_row_index() - 1;
+				$results[] = $result;
+			}
 		}
 	}
 	// Фильтруем результаты на основе поискового термина
-	$results = array_filter($results, function($result) use ($term) {
+	$results = array_filter($results, function ($result) use ($term) {
 		return mb_stripos($result['label'], $term, 0, 'UTF-8') !== false;
 	});
 
-    wp_reset_query();
+	wp_reset_query();
 
-    // Выводим результаты в формате JSON
-    wp_send_json($results);
+	// Выводим результаты в формате JSON
+	wp_send_json($results);
 }
 
 
@@ -1047,147 +1064,149 @@ function search_stations_autocomplete_callback() {
 add_action('wp_ajax_filter_stations', 'filter_stations');
 add_action('wp_ajax_nopriv_filter_stations', 'filter_stations');
 
-function filter_stations() {
-    $row_index = intval($_POST['row_index']);
+function filter_stations()
+{
+	$row_index = intval($_POST['row_index']);
 
-    if (!empty($_POST['station_start'])) {
-        $args = array(
-            'post_type' => 'page',
-            'post_status' => 'publish',
-            'posts_per_page' => -1,
-            'meta_query' => array(
-                'relation' => 'AND',
-                array(
-                    'key' => 'shedule_rows_' . $row_index . '_station_start',
-                    'value' => $_POST['station_start'],
-                    'compare' => '=',
-                )
-            )
-        );
+	if (!empty($_POST['station_start'])) {
+		$args = array(
+			'post_type' => 'page',
+			'post_status' => 'publish',
+			'posts_per_page' => -1,
+			'meta_query' => array(
+				'relation' => 'AND',
+				array(
+					'key' => 'shedule_rows_' . $row_index . '_station_start',
+					'value' => $_POST['station_start'],
+					'compare' => '=',
+				)
+			)
+		);
 
-        if (!empty($_POST['station_end'])) {
-            $args['meta_query'][] = array(
-                'key' => 'shedule_rows_' . $row_index . '_station_end',
-                'value' => $_POST['station_end'],
-                'compare' => '=',
-            );
-        }
+		if (!empty($_POST['station_end'])) {
+			$args['meta_query'][] = array(
+				'key' => 'shedule_rows_' . $row_index . '_station_end',
+				'value' => $_POST['station_end'],
+				'compare' => '=',
+			);
+		}
 
-        if (!empty($_POST['num'])) {
-            $args['meta_query'][] = array(
-                'key' => 'shedule_rows_' . $row_index . '_num',
-                'value' => $_POST['num'],
-                'compare' => '=',
-            );
-        }
+		if (!empty($_POST['num'])) {
+			$args['meta_query'][] = array(
+				'key' => 'shedule_rows_' . $row_index . '_num',
+				'value' => $_POST['num'],
+				'compare' => '=',
+			);
+		}
 
-        // Выполняем запрос
-        $query = new WP_Query($args);
+		// Выполняем запрос
+		$query = new WP_Query($args);
 
-        // Начинаем буферизацию вывода.
-        ob_start();
+		// Начинаем буферизацию вывода.
+		ob_start();
 
-        // Проверяем, есть ли данные
-        if ($query->have_posts()) {
-            ?>
-            <table class="table" data-current-page="1">
-                <thead class="table__thead title">
-                    <tr>
-                        <th width="110"><?= $current_language == 'ru' ? 'Номер' : 'Number' ?></th>
+		// Проверяем, есть ли данные
+		if ($query->have_posts()) {
+		?>
+			<table class="table" data-current-page="1">
+				<thead class="table__thead title">
+					<tr>
+						<th width="110"><?= $current_language == 'ru' ? 'Номер' : 'Number' ?></th>
 						<th width="200"><?= $current_language == 'ru' ? 'Дата начала рейса' : 'Flight start date' ?></th>
 						<th width="320"><?= $current_language == 'ru' ? 'Станция отправления' : 'Departure station' ?></th>
 						<th width="258"><?= $current_language == 'ru' ? 'Станция назначения' : 'Destination station' ?></th>
 						<th width="250"><?= $current_language == 'ru' ? 'Станция операции' : 'Operation Station' ?> <br /></th>
 						<th width="222"><?= $current_language == 'ru' ? 'Расстояние оставшееся' : 'Distance remaining' ?></th>
-                    </tr>
-                </thead>
-                <tbody class="table__tbody">
-                    <?php
-                    while ($query->have_posts()) {
-                        $query->the_post();
-                        if (have_rows('shedule_rows')) {
-                            while (have_rows('shedule_rows')) {
-                                the_row();
-                                $station_start = get_sub_field('station_start');
-                                $station_start_id = $station_start->ID;
-                                $station_end = get_sub_field('station_end');
-                                $station_end_id = $station_end->ID;
-                                $station_num = get_sub_field('num');
-                                $station_operation = get_sub_field('station_operation');
+					</tr>
+				</thead>
+				<tbody class="table__tbody">
+					<?php
+					while ($query->have_posts()) {
+						$query->the_post();
+						if (have_rows('shedule_rows')) {
+							while (have_rows('shedule_rows')) {
+								the_row();
+								$station_start = get_sub_field('station_start');
+								$station_start_id = $station_start->ID;
+								$station_end = get_sub_field('station_end');
+								$station_end_id = $station_end->ID;
+								$station_num = get_sub_field('num');
+								$station_operation = get_sub_field('station_operation');
 
-                                // Проверяем, соответствуют ли поля-повторители условиям фильтрации
-                                if (
-                                    $station_start_id == $_POST['station_start'] &&
-                                    (empty($_POST['station_end']) || $station_end_id == $_POST['station_end']) &&
-                                    (empty($_POST['num']) || $station_num == $_POST['num'])
-                                ) {
-                                    ?>
-                                    <tr>
-                                        <td><?php the_sub_field('num'); ?></td>
-                                        <td><?php the_sub_field('data') ?></td>
-                                        <td><?php echo $station_start->post_title; ?></td>
-                                        <td><?php echo $station_end->post_title; ?></td>
-                                        <td><?php echo $station_operation->post_title; ?></td>
-                                        <td><?php the_sub_field('distance'); ?></td>
-                                    </tr>
-                                    <?php
-                                }
-                            }
-                        }
-                    }
-                    ?>
-                </tbody>
-            </table>
-            <?php
-        } else {
-            echo 'Рейсы не найдены';
-        }
-        wp_reset_postdata();
-    } else {
-        echo 'Заполните все обязательные поля';
-    }
+								// Проверяем, соответствуют ли поля-повторители условиям фильтрации
+								if (
+									$station_start_id == $_POST['station_start'] &&
+									(empty($_POST['station_end']) || $station_end_id == $_POST['station_end']) &&
+									(empty($_POST['num']) || $station_num == $_POST['num'])
+								) {
+					?>
+									<tr>
+										<td><?php the_sub_field('num'); ?></td>
+										<td><?php the_sub_field('data') ?></td>
+										<td><?php echo $station_start->post_title; ?></td>
+										<td><?php echo $station_end->post_title; ?></td>
+										<td><?php echo $station_operation->post_title; ?></td>
+										<td><?php the_sub_field('distance'); ?></td>
+									</tr>
+					<?php
+								}
+							}
+						}
+					}
+					?>
+				</tbody>
+			</table>
+		<?php
+		} else {
+			echo 'Рейсы не найдены';
+		}
+		wp_reset_postdata();
+	} else {
+		echo 'Заполните все обязательные поля';
+	}
 
-    $response = ob_get_clean();
-    echo $response;
+	$response = ob_get_clean();
+	echo $response;
 
-    die();
+	die();
 }
 
 //Обновление пагинации в Категориях
-function load_posts() {
-    $category = $_POST['category'];
-    $paged = $_POST['page'];
+function load_posts()
+{
+	$category = $_POST['category'];
+	$paged = $_POST['page'];
 	$category_obj = get_category_by_slug($category);
-    $category_link = get_term_link($category_obj);
-    $query = new WP_Query(array(
-        'category_name' => $category,
-        'paged' => $paged
-    ));
-    ob_start();
-    if ($query->have_posts()) {
-        while ($query->have_posts()) {
-            $query->the_post(); ?>
+	$category_link = get_term_link($category_obj);
+	$query = new WP_Query(array(
+		'category_name' => $category,
+		'paged' => $paged
+	));
+	ob_start();
+	if ($query->have_posts()) {
+		while ($query->have_posts()) {
+			$query->the_post(); ?>
 			<li class="new">
 				<img alt="<?php the_title(); ?>" class="new__img" src="<?php the_post_thumbnail_url(); ?>">
 				<div class="new__text-container">
-				<p class="new__date text"><?php the_time('d.m.Y'); ?></p>
-				<h3 class="new__title title title--h5"><?php the_title(); ?></h3>
-				<p class="new__description"><?php the_excerpt(); ?></p>
-				<a href="<?php the_permalink(); ?>" class="new__link text">Читать полностью</a>
+					<p class="new__date text"><?php the_time('d.m.Y'); ?></p>
+					<h3 class="new__title title title--h5"><?php the_title(); ?></h3>
+					<p class="new__description"><?php the_excerpt(); ?></p>
+					<a href="<?php the_permalink(); ?>" class="new__link text">Читать полностью</a>
 				</div>
 			</li>
-		<?php
-        }
-        wp_reset_postdata();
-    }
+	<?php
+		}
+		wp_reset_postdata();
+	}
 	$response['posts'] = ob_get_clean();
-    
+
 	$args = array(
 		'base'               => $category_link . 'page/%#%/',
-        'format'             => '?paged=%#%',
-        'total'              => $query->max_num_pages,
-        'current'            => $paged,
-        'prev_text'          => '<svg xmlns="http://www.w3.org/2000/svg" width="11" height="16" viewBox="0 0 11 16" fill="none">
+		'format'             => '?paged=%#%',
+		'total'              => $query->max_num_pages,
+		'current'            => $paged,
+		'prev_text'          => '<svg xmlns="http://www.w3.org/2000/svg" width="11" height="16" viewBox="0 0 11 16" fill="none">
 		<g clip-path="url(#clip0_1022_199799)">
 		<path fill-rule="evenodd" clip-rule="evenodd" d="M9 16L8 16L2 8L8 -8.74228e-08L9 0L3 8L9 16Z" fill="currentColor"></path>
 		</g>
@@ -1197,7 +1216,7 @@ function load_posts() {
 		</clipPath>
 		</defs>
 		</svg>',
-        'next_text'          => '<svg xmlns="http://www.w3.org/2000/svg" width="11" height="16" viewBox="0 0 11 16" fill="none">
+		'next_text'          => '<svg xmlns="http://www.w3.org/2000/svg" width="11" height="16" viewBox="0 0 11 16" fill="none">
 		<g clip-path="url(#clip0_1022_199800)">
 		<path fill-rule="evenodd" clip-rule="evenodd" d="M2 16L3 16L9 8L3 1.74846e-07L2 0L8 8L2 16Z" fill="currentColor"></path>
 		</g>
@@ -1209,7 +1228,7 @@ function load_posts() {
 		</svg>',
 		'type'      => 'array',
 	);
-	
+
 	ob_start();
 	$pagination = paginate_links($args);
 	foreach ($pagination as $page) {
@@ -1220,9 +1239,58 @@ function load_posts() {
 			echo '<button class="pagination__link ' . $active_class . '">' . $page . '</button>';
 		}
 	}
-    $response['pagination'] = ob_get_clean();
+	$response['pagination'] = ob_get_clean();
 
 	wp_send_json_success($response);
 }
 add_action('wp_ajax_load_posts', 'load_posts');
 add_action('wp_ajax_nopriv_load_posts', 'load_posts');
+
+// News page, add custom meta box for bg text
+
+// Добавляем кастомное мета поле для описания записи
+function custom_post_description_meta_box()
+{
+	add_meta_box(
+		'custom_post_description_meta_box',
+		__('Заголовок фона новости', 'textdomain'), // Заголовок мета бокса
+		'custom_post_description_meta_box_callback',
+		'post', // Тип записи, для которой создаем мета поле (в данном случае для постов)
+		'side', // side - справа в колонке редактирования, normal - посередине, в основном редакторе записи
+		'default'
+	);
+}
+add_action('add_meta_boxes', 'custom_post_description_meta_box');
+
+// Callback функция для отображения содержимого мета бокса
+function custom_post_description_meta_box_callback($post)
+{
+	// Получаем текущее значение мета поля
+	$custom_description = get_post_meta($post->ID, 'custom_description_meta_key', true);
+	// Выводим поле для ввода текста
+	?>
+	<p>
+		<label for="custom_description"><?php _e('Содержимое:', 'textdomain'); ?></label>
+		<br>
+		<textarea id="custom_description" name="custom_description" style="width: 100%;" rows="5"><?php echo esc_textarea($custom_description); ?></textarea>
+	</p>
+<?php
+}
+
+// Сохраняем значение кастомного мета поля при сохранении записи
+function save_custom_post_description_meta($post_id)
+{
+	// Проверяем права пользователя
+	if (!current_user_can('edit_post', $post_id)) {
+		return;
+	}
+	// Проверяем, установлено ли значение
+	if (isset($_POST['custom_description'])) {
+		// Сохраняем значение мета поля
+		update_post_meta($post_id, 'custom_description_meta_key', sanitize_text_field($_POST['custom_description']));
+	} else {
+		// Если значение не установлено, удаляем мета поле
+		delete_post_meta($post_id, 'custom_description_meta_key');
+	}
+}
+add_action('save_post', 'save_custom_post_description_meta');
