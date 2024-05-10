@@ -385,12 +385,26 @@ li:nth-child(2) {
 }
 
 .new__title {
-    margin-bottom: 15px
+    margin-bottom: 15px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
 }
 
 .new__description {
     line-height: 150%;
     margin-bottom: 20px
+}
+
+.new__description~p {
+    margin-bottom: 15px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
 }
 
 .new {
