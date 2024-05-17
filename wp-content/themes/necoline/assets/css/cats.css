@@ -385,7 +385,6 @@ li:nth-child(2) {
 }
 
 .new__title {
-    margin-bottom: 15px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -399,7 +398,6 @@ li:nth-child(2) {
 }
 
 .new__description~p {
-    margin-bottom: 15px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
