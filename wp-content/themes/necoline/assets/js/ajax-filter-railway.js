@@ -1,10 +1,10 @@
-jQuery(document).ready(function($) {
-    var isFilterApplied = false; 
-    var previousContent = null; 
+jQuery(document).ready(function ($) {
+    var isFilterApplied = false;
+    var previousContent = null;
 
     //Автокомплит
     $('input[name="station_end"]').autocomplete({
-        source: function(request, response) {
+        source: function (request, response) {
             $.ajax({
                 url: ajax_object.ajaxurl,
                 type: 'POST',
@@ -13,24 +13,24 @@ jQuery(document).ready(function($) {
                     term: request.term,
                     action: 'search_stations_autocomplete',
                 },
-                success: function(data) {
+                success: function (data) {
                     response(data);
                 }
             });
         },
         minLength: 2,
         appendTo: ".search-stations__form",
-        select: function(event, ui) {
+        select: function (event, ui) {
             event.preventDefault();
             // Если нужно перенаправить пользователя на выбранный пост
             // window.location.href = ui.item.link;
             $(this).val(ui.item.label);
             $(this).data('stationid', ui.item.id);
-            
+
             $('input[name="row_index"]').val(ui.item.row);
             $('input[name="station_end_id"]').val(ui.item.id);
         }
-    }).on('input', function() {
+    }).on('input', function () {
         // Это событие сработает каждый раз, когда значение input изменяется
         if (!this.value) {
             // Если значение input пустое, очищаем data-атрибут
@@ -38,9 +38,9 @@ jQuery(document).ready(function($) {
             $('input[name="station_end_id"]').val('');
         }
     });
-    
+
     //Ajax-фильтр расписания поездов
-    $('.search-stations__form').submit(function(e) {
+    $('.search-stations__form').submit(function (e) {
         e.preventDefault();
 
         var form = $(this);
@@ -64,7 +64,7 @@ jQuery(document).ready(function($) {
             }
             function findRowIndexByNum(num) {
                 var rowIndex = 0;
-                $('.td__num').each(function(index) {
+                $('.td__num').each(function (index) {
                     if ($(this).html() === num) {
                         rowIndex = index;
                         return false; // Прекратить цикл, если найдено совпадение
@@ -72,19 +72,19 @@ jQuery(document).ready(function($) {
                 });
                 return rowIndex;
             }
-            
+
             console.log(ajax_object.ajaxurl);
             $.ajax({
-                url : ajax_object.ajaxurl,
-                type : 'POST',
-                data : {
-                    action : 'filter_stations',
-                    station_start : station_start,
-                    station_end : station_end,
-                    num : num,
-                    row_index : row_index
+                url: ajax_object.ajaxurl,
+                type: 'POST',
+                data: {
+                    action: 'filter_stations',
+                    station_start: station_start,
+                    station_end: station_end,
+                    num: num,
+                    row_index: row_index
                 },
-                beforeSend: function() {
+                beforeSend: function () {
                     previousContent = $('.table-wrapper').html();
                     $('.table-wrapper').html('<div class="loader"></div>');
                 },

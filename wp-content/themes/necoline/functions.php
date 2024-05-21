@@ -1068,102 +1068,104 @@ function filter_stations()
 {
 	$row_index = intval($_POST['row_index']);
 
-	if (!empty($_POST['station_start'])) {
-		$args = array(
-			'post_type' => 'page',
-			'post_status' => 'publish',
-			'posts_per_page' => -1,
-			'meta_query' => array(
-				'relation' => 'AND',
-				array(
-					'key' => 'shedule_rows_' . $row_index . '_station_start',
-					'value' => $_POST['station_start'],
-					'compare' => '=',
-				)
+	// if (!empty($_POST['station_start'])) {
+
+	$args = array(
+		'post_type' => 'page',
+		'post_status' => 'publish',
+		'posts_per_page' => -1,
+		'meta_query' => array(
+			'relation' => 'AND',
+			array(
+				'key' => 'shedule_rows_' . $row_index . '_station_start',
+				'value' => '2110', // тут был $_POST['station_start']
+				'compare' => '=',
 			)
+		)
+	);
+
+	if (!empty($_POST['station_end'])) {
+		$args['meta_query'][] = array(
+			'key' => 'shedule_rows_' . $row_index . '_station_end',
+			'value' => $_POST['station_end'],
+			'compare' => '=',
 		);
+	}
 
-		if (!empty($_POST['station_end'])) {
-			$args['meta_query'][] = array(
-				'key' => 'shedule_rows_' . $row_index . '_station_end',
-				'value' => $_POST['station_end'],
-				'compare' => '=',
-			);
-		}
+	if (!empty($_POST['num'])) {
+		$args['meta_query'][] = array(
+			'key' => 'shedule_rows_' . $row_index . '_num',
+			'value' => $_POST['num'],
+			'compare' => '=',
+		);
+	}
 
-		if (!empty($_POST['num'])) {
-			$args['meta_query'][] = array(
-				'key' => 'shedule_rows_' . $row_index . '_num',
-				'value' => $_POST['num'],
-				'compare' => '=',
-			);
-		}
+	// Выполняем запрос
+	$query = new WP_Query($args);
 
-		// Выполняем запрос
-		$query = new WP_Query($args);
+	// Начинаем буферизацию вывода.
+	ob_start();
 
-		// Начинаем буферизацию вывода.
-		ob_start();
-
-		// Проверяем, есть ли данные
-		if ($query->have_posts()) {
+	// Проверяем, есть ли данные
+	if ($query->have_posts()) {
 		?>
-			<table class="table" data-current-page="1">
-				<thead class="table__thead title">
-					<tr>
-						<th width="110"><?= $current_language == 'ru' ? 'Номер' : 'Number' ?></th>
-						<th width="200"><?= $current_language == 'ru' ? 'Дата начала рейса' : 'Flight start date' ?></th>
-						<th width="320"><?= $current_language == 'ru' ? 'Станция отправления' : 'Departure station' ?></th>
-						<th width="258"><?= $current_language == 'ru' ? 'Станция назначения' : 'Destination station' ?></th>
-						<th width="250"><?= $current_language == 'ru' ? 'Станция операции' : 'Operation Station' ?> <br /></th>
-						<th width="222"><?= $current_language == 'ru' ? 'Расстояние оставшееся' : 'Distance remaining' ?></th>
-					</tr>
-				</thead>
-				<tbody class="table__tbody">
-					<?php
-					while ($query->have_posts()) {
-						$query->the_post();
-						if (have_rows('shedule_rows')) {
-							while (have_rows('shedule_rows')) {
-								the_row();
-								$station_start = get_sub_field('station_start');
-								$station_start_id = $station_start->ID;
-								$station_end = get_sub_field('station_end');
-								$station_end_id = $station_end->ID;
-								$station_num = get_sub_field('num');
-								$station_operation = get_sub_field('station_operation');
+		<table class="table" data-current-page="1">
+			<thead class="table__thead title">
+				<tr>
+					<th width="110"><?= $current_language == 'ru' ? 'Номер' : 'Number' ?></th>
+					<th width="200"><?= $current_language == 'ru' ? 'Дата начала рейса' : 'Flight start date' ?></th>
+					<th width="320"><?= $current_language == 'ru' ? 'Станция отправления' : 'Departure station' ?></th>
+					<th width="258"><?= $current_language == 'ru' ? 'Станция назначения' : 'Destination station' ?></th>
+					<th width="250"><?= $current_language == 'ru' ? 'Станция операции' : 'Operation Station' ?> <br /></th>
+					<th width="222"><?= $current_language == 'ru' ? 'Расстояние оставшееся' : 'Distance remaining' ?></th>
+				</tr>
+			</thead>
+			<tbody class="table__tbody">
+				<?php
+				while ($query->have_posts()) {
+					$query->the_post();
+					if (have_rows('shedule_rows')) {
+						while (have_rows('shedule_rows')) {
+							the_row();
+							$station_start = get_sub_field('station_start');
+							$station_start_id = $station_start->ID;
+							$station_end = get_sub_field('station_end');
+							$station_end_id = $station_end->ID;
+							$station_num = get_sub_field('num');
+							$station_operation = get_sub_field('station_operation');
 
-								// Проверяем, соответствуют ли поля-повторители условиям фильтрации
-								if (
-									$station_start_id == $_POST['station_start'] &&
-									(empty($_POST['station_end']) || $station_end_id == $_POST['station_end']) &&
-									(empty($_POST['num']) || $station_num == $_POST['num'])
-								) {
-					?>
-									<tr>
-										<td><?php the_sub_field('num'); ?></td>
-										<td><?php the_sub_field('data') ?></td>
-										<td><?php echo $station_start->post_title; ?></td>
-										<td><?php echo $station_end->post_title; ?></td>
-										<td><?php echo $station_operation->post_title; ?></td>
-										<td><?php the_sub_field('distance'); ?></td>
-									</tr>
-					<?php
-								}
+							// Проверяем, соответствуют ли поля-повторители условиям фильтрации
+							if (
+								$station_start_id == '2110' && // тут был $_POST['station_start'] заместо '2110'
+								(empty($_POST['station_end']) || $station_end_id == $_POST['station_end']) &&
+								(empty($_POST['num']) || $station_num == $_POST['num'])
+							) {
+				?>
+								<tr>
+									<td><?php the_sub_field('num'); ?></td>
+									<td><?php the_sub_field('data') ?></td>
+									<td><?php echo $station_start->post_title; ?></td>
+									<td><?php echo $station_end->post_title; ?></td>
+									<td><?php echo $station_operation->post_title; ?></td>
+									<td><?php the_sub_field('distance'); ?></td>
+								</tr>
+				<?php
 							}
 						}
 					}
-					?>
-				</tbody>
-			</table>
+				}
+				?>
+			</tbody>
+		</table>
 		<?php
-		} else {
-			echo 'Рейсы не найдены';
-		}
-		wp_reset_postdata();
 	} else {
-		echo 'Заполните все обязательные поля';
+		echo 'Рейсы не найдены';
 	}
+	wp_reset_postdata();
+	// } 
+	// else {
+	// 	echo 'Заполните все обязательные поля';
+	// }
 
 	$response = ob_get_clean();
 	echo $response;
