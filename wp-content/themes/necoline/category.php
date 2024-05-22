@@ -143,18 +143,96 @@ $current_language = pll_current_language();
         <?php if ($arts_posts->have_posts()) : ?>
             <div class="gallery">
                 <ul class="news__list gallery__item">
-                    <?php while ($arts_posts->have_posts()) : $arts_posts->the_post(); ?>
-                        <li class="new">
-                            <img alt="<?php the_title(); ?>" class="new__img" src="<?php the_post_thumbnail_url(); ?>">
-                            <div class="new__text-container">
-                                <p class="new__date text"><?php the_time('d.m.Y'); ?></p>
-                                <h3 class="new__title title title--h5"><?php the_title(); ?></h3>
-                                <p class="new__description"><?= $current_language == 'ru' ? 'В нашем распоряжении находится 4 современных корабля грузовых, которые
-        обеспечивают высокую надёжность и безопасность перевозок.' : 'We have at our disposal 4 modern cargo ships, which
-        provide high reliability and safety of transportation.' ?></p>
-                                <a href="<?php the_permalink(); ?>" class="new__link text"><?= $current_language == 'ru' ? 'Читать полностью' : 'Read completely' ?></a>
-                            </div>
-                        </li>
+                    <?php $counter = 0; ?>
+                    <?php while ($arts_posts->have_posts()) : $arts_posts->the_post();
+                        // Получаем значение мета поля для текущей записи
+                        $custom_description = get_post_meta(get_the_ID(), 'custom_description_meta_key', true);
+                    ?>
+                        <?php if ($counter === 0) : ?>
+                            <li class="new">
+                                <?php if (has_post_thumbnail()) { ?>
+                                    <img alt="<?php the_title(); ?>" class="new__img" src="<?php the_post_thumbnail_url(); ?>">
+                                <?php } else { ?>
+                                    <div class="news__custom-bg-block">
+                                        <div class="custom-bg-block__icon-and-title">
+                                            <img src="<?php theme_image('bird-logo.svg'); ?>" alt="<?php the_title(); ?>">
+                                            <span>NECO LINE</span>
+                                        </div>
+                                        <span><?= $custom_description; ?></span>
+                                    </div>
+                                <?php } ?>
+
+                                <div class="new__text-container">
+                                    <p class="new__date text"><?php the_time('d.m.Y'); ?></p>
+                                    <h3 class="new__title title title--h5"><?php the_title(); ?></h3>
+                                    <p class="new__description"><?php the_excerpt(); ?></p>
+                                    <a href="<?php the_permalink(); ?>" class="new__link text"><?= $current_language == 'ru' ? 'Читать полностью' : 'Read completely' ?></a>
+                                </div>
+                            </li>
+                        <?php elseif ($counter === 1) : ?>
+                            <div class="news-item-container">
+                                <li class="new">
+                                    <?php if (has_post_thumbnail()) { ?>
+                                        <img alt="<?php the_title(); ?>" class="new__img" src="<?php the_post_thumbnail_url(); ?>">
+                                    <?php } else { ?>
+                                        <div class="news__custom-bg-block">
+                                            <div class="custom-bg-block__icon-and-title">
+                                                <img src="<?php theme_image('bird-logo.svg'); ?>" alt="<?php the_title(); ?>">
+                                                <span>NECO LINE</span>
+                                            </div>
+                                            <span><?= $custom_description; ?></span>
+                                        </div>
+                                    <?php } ?>
+                                    <div class="new__text-container">
+                                        <p class="new__date text"><?php the_time('d.m.Y'); ?></p>
+                                        <h3 class="new__title title title--h5"><?php the_title(); ?></h3>
+                                        <p class="new__description"><?php the_excerpt(); ?></p>
+                                        <a href="<?php the_permalink(); ?>" class="new__link text"><?= $current_language == 'ru' ? 'Читать полностью' : 'Read completely' ?></a>
+                                    </div>
+                                </li>
+                            <?php elseif ($counter === 2) : ?>
+                                <li class="new">
+                                    <?php if (has_post_thumbnail()) { ?>
+                                        <img alt="<?php the_title(); ?>" class="new__img" src="<?php the_post_thumbnail_url(); ?>">
+                                    <?php } else { ?>
+                                        <div class="news__custom-bg-block">
+                                            <div class="custom-bg-block__icon-and-title">
+                                                <img src="<?php theme_image('bird-logo.svg'); ?>" alt="<?php the_title(); ?>">
+                                                <span>NECO LINE</span>
+                                            </div>
+                                            <span><?= $custom_description; ?></span>
+                                        </div>
+                                    <?php } ?>
+                                    <div class="new__text-container">
+                                        <p class="new__date text"><?php the_time('d.m.Y'); ?></p>
+                                        <h3 class="new__title title title--h5"><?php the_title(); ?></h3>
+                                        <p class="new__description"><?php the_excerpt(); ?></p>
+                                        <a href="<?php the_permalink(); ?>" class="new__link text"><?= $current_language == 'ru' ? 'Читать полностью' : 'Read completely' ?></a>
+                                    </div>
+                                </li>
+                            </div><!-- close .news-item-container -->
+                        <?php else : ?>
+                            <li class="new">
+                                <?php if (has_post_thumbnail()) { ?>
+                                    <img alt="<?php the_title(); ?>" class="new__img" src="<?php the_post_thumbnail_url(); ?>">
+                                <?php } else { ?>
+                                    <div class="news__custom-bg-block">
+                                        <div class="custom-bg-block__icon-and-title">
+                                            <img src="<?php theme_image('bird-logo.svg'); ?>" alt="<?php the_title(); ?>">
+                                            <span>NECO LINE</span>
+                                        </div>
+                                        <span><?= $custom_description; ?></span>
+                                    </div>
+                                <?php } ?>
+                                <div class="new__text-container">
+                                    <p class="new__date text"><?php the_time('d.m.Y'); ?></p>
+                                    <h3 class="new__title title title--h5"><?php the_title(); ?></h3>
+                                    <p class="new__description"><?php the_excerpt(); ?></p>
+                                    <a href="<?php the_permalink(); ?>" class="new__link text"><?= $current_language == 'ru' ? 'Читать полностью' : 'Read completely' ?></a>
+                                </div>
+                            </li>
+                        <?php endif; ?>
+                        <?php $counter++; ?>
                     <?php endwhile; ?>
                     <?php wp_reset_postdata(); ?>
                 </ul>
@@ -164,6 +242,7 @@ $current_language = pll_current_language();
             </div>
         <?php endif; ?>
     </section>
+
 
     <section class="form form-news">
         <div class="container">
