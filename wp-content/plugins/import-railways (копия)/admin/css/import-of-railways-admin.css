@@ -1,0 +1,13 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+.import-container {
+    padding: 15px 25px;
+}
+
+h1 {
+    font-size: 21px;
+    margin-bottom: 35px;
+}

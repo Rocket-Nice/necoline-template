@@ -253,6 +253,17 @@ if (function_exists('acf_add_options_page')) {
 		'redirect'    => false,
 		'icon_url'    => 'dashicons-screenoptions',
 	));
+
+	// Страница опций для английского языка, создание страницы опций, для примера
+	// acf_add_options_page(array(
+	// 	'page_title'  => 'Theme Settings (EN)',
+	// 	'menu_title'  => 'Theme Settings (EN)',
+	// 	'menu_slug'   => 'theme-settings-en',
+	// 	'capability'  => 'edit_posts',
+	// 	'position'    => '30.2',
+	// 	'redirect'    => false,
+	// 	'icon_url'    => 'dashicons-screenoptions',
+	// ));
 }
 
 add_action('init', 'necoline_register_types');
