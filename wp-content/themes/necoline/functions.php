@@ -843,7 +843,7 @@ function filter_posts_callback()
 					if (!empty($port_infos) && is_array($port_infos)) {
 						$skip_group = true;
 						foreach ($port_infos as $port_info) {
-							$etd_date = strtotime($port_info['date_etd'] . '.' . $current_year);
+							$etd_date = strtotime($port_info['date_eta'] . '.' . $current_year);
 							if ($etd_date < $current_time) {
 								$skipDate = true;
 							}
@@ -851,9 +851,9 @@ function filter_posts_callback()
 
 						foreach ($port_infos as $port_info) {
 							// Проверяем, содержит ли строка дату валидный формат
-							if (strpos($port_info['date_etd'], '.') !== false) {
+							if (strpos($port_info['date_eta'], '.') !== false) {
 								// Преобразуем строку в дату
-								$etd_date = strtotime($port_info['date_etd'] . '.' . $current_year);
+								$etd_date = strtotime($port_info['date_eta'] . '.' . $current_year);
 								// Продолжаем только если дата была успешно преобразована
 								if ($etd_date !== false) {
 									// Проверяем условие, если дата отправления больше или равна текущей дате
@@ -871,8 +871,8 @@ function filter_posts_callback()
 					}
 				}
 			}
-
-			if ($skip_port || $isActive) {
+			// Добавить через ИЛИ $isActive если нужно будет убрать из расписания
+			if ($skip_port) {
 				continue;
 			}
 	?>
